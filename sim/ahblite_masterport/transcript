@@ -1,0 +1,38 @@
+# //  Questa Sim-64
+# //  Version 10.4c win64 Jul 20 2015
+# //
+# //  Copyright 1991-2015 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //  THIS DOCUMENT CONTAINS TRADE SECRETS AND COMMERCIAL OR FINANCIAL
+# //  INFORMATION THAT ARE PRIVILEGED, CONFIDENTIAL, AND EXEMPT FROM
+# //  DISCLOSURE UNDER THE FREEDOM OF INFORMATION ACT, 5 U.S.C. SECTION 552.
+# //  FURTHERMORE, THIS INFORMATION IS PROHIBITED FROM DISCLOSURE UNDER
+# //  THE TRADE SECRETS ACT, 18 U.S.C. SECTION 1905.
+# //
+# wf_ahblite_masterport.wlf opened as dataset "wf_ahblite_masterport"
+add wave -position end  wf_ahblite_masterport:/tb_ahblite_masterport/view_slv_HSEL_o
+add wave -position end  wf_ahblite_masterport:/tb_ahblite_masterport/view_slv_HADDR_o_0
+add wave -position end  wf_ahblite_masterport:/tb_ahblite_masterport/view_slv_HWDATA_o_0
+add wave -position 0  wf_ahblite_masterport:/tb_ahblite_masterport/HCLK
+add wave -position 1  wf_ahblite_masterport:/tb_ahblite_masterport/HRESETn
+add wave -position 2  wf_ahblite_masterport:/tb_ahblite_masterport/mst_HBURST_i
+add wave -position 3  wf_ahblite_masterport:/tb_ahblite_masterport/mst_HSIZE_i
+add wave -position 4  wf_ahblite_masterport:/tb_ahblite_masterport/mst_HADDR_i
+add wave -position 5  wf_ahblite_masterport:/tb_ahblite_masterport/mst_HTRANS_i
+add wave -position 6  wf_ahblite_masterport:/tb_ahblite_masterport/mst_HWDATA_i
+add wave -position 7  wf_ahblite_masterport:/tb_ahblite_masterport/mst_HWRITE_i
+add wave -position end  wf_ahblite_masterport:/tb_ahblite_masterport/i_ahblite_masterport/slv_HREADYOUT_i
+dataset reload -f
+# wf_ahblite_masterport:/tb_ahblite_masterport/i_ahblite_masterport
+add wave -position end  wf_ahblite_masterport:/tb_ahblite_masterport/i_ahblite_masterport/nx_burst_cnt
+add wave -position end  wf_ahblite_masterport:/tb_ahblite_masterport/i_ahblite_masterport/burst_cnt
+add wave -position end  wf_ahblite_masterport:/tb_ahblite_masterport/i_ahblite_masterport/burst_cnt_upd
+add wave -position end  wf_ahblite_masterport:/tb_ahblite_masterport/i_ahblite_masterport/boundary
+add wave -position end  wf_ahblite_masterport:/tb_ahblite_masterport/i_ahblite_masterport/wdata_lat
+add wave -position end  wf_ahblite_masterport:/tb_ahblite_masterport/i_ahblite_masterport/wdata
+dataset reload -f
+# wf_ahblite_masterport:/tb_ahblite_masterport/i_ahblite_masterport

@@ -71,6 +71,8 @@ module ahblite_masterport #(
     //addr decoder
     logic       [HADDR_SIZE-1:0]                        mst_addr_valid[SLAVE-1:0];
     logic       [HADDR_SIZE-1:0]                        slv_addr_valid[SLAVE-1:0];
+    logic                                               slv_HSEL_int[SLAVE-1:0];
+    logic                                               slv_HSEL_extend[SLAVE-1:0];
     
     //burst decoder
     logic                                               burst_single;
@@ -134,7 +136,17 @@ module ahblite_masterport #(
         for(slv_sel=0; slv_sel<SLAVE; slv_sel++) begin : HSEL__GEN
             assign mst_addr_valid[slv_sel][HADDR_SIZE-1:0] = mst_HADDR_i[HADDR_SIZE-1:0] & slv_HADDR_mask_i[slv_sel][HADDR_SIZE-1:0];
             assign slv_addr_valid[slv_sel][HADDR_SIZE-1:0] = slv_HADDR_base_i[slv_sel][HADDR_SIZE-1:0] & slv_HADDR_mask_i[slv_sel][HADDR_SIZE-1:0];
-            assign slv_HSEL_o[slv_sel] = &(mst_addr_valid[slv_sel][HADDR_SIZE-1:0] ~^ slv_addr_valid[slv_sel][HADDR_SIZE-1:0]);
+            assign slv_HSEL_int[slv_sel] = &(mst_addr_valid[slv_sel][HADDR_SIZE-1:0] ~^ slv_addr_valid[slv_sel][HADDR_SIZE-1:0]);
+
+            always_ff @(posedge HCLK or negedge HRESETn) begin
+                if(~HRESETn) begin
+                    slv_HSEL_extend[slv_sel] <= 1'b0;
+                end else begin
+                    slv_HSEL_extend[slv_sel] <= slv_HSEL_int[slv_sel];
+                end
+            end
+
+            assign slv_HSEL_o[slv_sel] = slv_HSEL_int[slv_sel] | slv_HSEL_extend[slv_sel];
         end
     endgenerate
 
@@ -255,7 +267,8 @@ module ahblite_masterport #(
     //write data
     assign wdata = (mst_HWRITE_i) ? mst_HWDATA_i : 32'h0;
     assign nx_wdata = (mst_HTRANS_i == NONSEQ)  ? wdata :
-                      (mst_HTRANS_i == SEQ)     ? wdata : wdata_lat;
+                      (mst_HTRANS_i == SEQ)     ? wdata :
+                      (mst_HTRANS_i == IDLE)    ? 32'h0 : wdata_lat;
     always_ff @(posedge HCLK or negedge HRESETn) begin
         if(~HRESETn) begin
             wdata_lat <= 32'h0;
