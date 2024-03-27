@@ -95,10 +95,24 @@ module ahblite_interconnect_masterport #(
     logic   [1:0]                                   nx_HTRANS;
 
     //-----------------------
-    //address decode
+    //address decode -> generate HSEL
     logic   [SLAVE-1:0][HADDR_WIDTH-1:0]            mst_addr_valid;
     logic   [SLAVE-1:0][HADDR_WIDTH-1:0]            slv_addr_valid;
     logic                                           htrans_idle_det;
+
+    //-----------------------
+    //burst decoder
+    logic                                               burst_single;
+    logic                                               burst_incr_undefined_length;
+    logic                                               burst_incr;
+    logic                                               burst_wrap;
+
+    //-----------------------
+    //burst counter
+    logic       [3:0]                                   burst_cnt;
+    logic       [3:0]                                   nx_burst_cnt;
+    logic       [3:0]                                   burst_cnt_upd;
+    logic       [3:0]                                   init_burst_cnt;
 
     ////////////////////////////////////////////////////////////////////////////
     //design description
@@ -195,7 +209,7 @@ module ahblite_interconnect_masterport #(
     end 
 
     //--------------------------------------------------------------------------
-    //address decode
+    //address decode -> generate HSEL
     assign htrans_idle_det = ~mst_HTRANS_i[0] & ~mst_HTRANS_i[1];
     generate
         for(slv_sel=0; slv_sel<SLAVE; slave_sel++) begin : HSEL__GEN
@@ -204,6 +218,33 @@ module ahblite_interconnect_masterport #(
             assign slv_HSEL_o[slv_sel] = htrans_idle_det ? &(mst_addr_valid[slv_sel] ~^ slv_addr_valid[slv_sel]) : 1'b0;
         end
     endgenerate
+
+    //--------------------------------------------------------------------------
+    //burst decoder
+    assign burst_single = (~mst_HBURST_i[2]) & (~mst_HBURST_i[1]) & (~mst_HBURST_i[0]);
+    assign burst_incr_undefined_length = (~mst_HBURST_i[2]) & (~mst_HBURST_i[1]) & mst_HBURST_i[0];
+    assign burst_incr = (mst_HBURST_i[2] & mst_HBURST_i[0]) | (mst_HBURST_i[1] & mst_HBURST_i[0]);
+    assign burst_wrap = (~mst_HBURST_i[0]) & (mst_HBURST_i[1] | mst_HBURST_i[2]);
+
+    //--------------------------------------------------------------------------
+    //burst counter
+    assign init_burst_cnt[3] = mst_HBURST_i[2] & mst_HBURST_i[1];
+    assign init_burst_cnt[2] = mst_HBURST_i[2];
+    assign init_burst_cnt[1] = mst_HBURST_i[2] | mst_HBURST_i[1];
+    assign init_burst_cnt[0] = mst_HBURST_i[2] | mst_HBURST_i[1] | mst_HBURST_i[0];
+
+    assign burst_cnt_upd = (burst_incr_undefined_length) ? burst_cnt : burst_cnt - 4'b0001;
+
+    assign nx_burst_cnt = (~mst_HREADYOUT_o)        ? burst_cnt :
+                          (mst_HTRANS_i == NONSEQ)  ? init_burst_cnt :
+                          (mst_HTRANS_i == SEQ)     ? burst_cnt_upd : burst_cnt;
+    always_ff @(posedge HCLK or negedge HRESETn) begin
+        if(~HRESETn) begin
+            burst_cnt <= 4'h0;
+        end else begin
+            burst_cnt <= nx_burst_cnt;
+        end
+    end
 
     //--------------------------------------------------------------------------
     //FSM - identify next state
