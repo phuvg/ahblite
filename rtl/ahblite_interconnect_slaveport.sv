@@ -55,15 +55,15 @@ module ahblite_interconnect_masterport #(
 
     //#--> internal connect
     output logic    [MASTER-1:0]                    mst_grant_o,
-    output logic    [MASTER-1:0][HADDR_WIDTH-1:0]   mst_HADDR_base_o,
-    output logic    [MASTER-1:0][HADDR_WIDTH-1:0]   mst_HADDR_mask_o,
+    output logic    [MASTER-1:0][HADDR_WIDTH-1:0]   slv_HADDR_base_o,
+    output logic    [MASTER-1:0][HADDR_WIDTH-1:0]   slv_HADDR_mask_o,
     input           [MASTER-1:0]                    mst_switch_i,
     input           [MASTER-1:0]                    mst_HSEL_i
 );
     ////////////////////////////////////////////////////////////////////////////
     //parameter declaration
     ////////////////////////////////////////////////////////////////////////////
-    localparam      PRIORITY_WIDTH                  = MASTER==1 ? 1: $clog2(MASTER);
+    localparam      PRIORITY_WIDTH                  = MASTER==1 ? 1 : $clog2(MASTER);
     localparam      PRIORITY_LEVEL                  = MASTER;
 	
     
@@ -240,8 +240,8 @@ module ahblite_interconnect_masterport #(
     //#--> address of slave to masterport
     generate
         for(mst_sel=0; mst_sel<MASTER; mst_sel++) begin : addr_to_masterport__GEN
-            assign mst_HADDR_base_o[mst_sel] = slv_HADDR_base_i;
-            assign mst_HADDR_mask_o[mst_sel] = slv_HADDR_mask_i;
+            assign slv_HADDR_base_o[mst_sel] = slv_HADDR_base_i;
+            assign slv_HADDR_mask_o[mst_sel] = slv_HADDR_mask_i;
         end
     endgenerate
 
