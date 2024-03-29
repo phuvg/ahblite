@@ -1,12 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////
-// Filename    : ahblite_interconnect_masterport.sv
+// Filename    : ahblite_interconnect_slaveport.sv
 // Description : 
 //
 // Author      : Phu Vuong
 // History     : Mar 26, 2024 : Initial     
 //
 ////////////////////////////////////////////////////////////////////////////////
-module ahblite_interconnect_masterport #(
+module ahblite_interconnect_slaveport #(
     parameter       MASTER                          = 1,
     parameter       HADDR_WIDTH                     = 32,
     parameter       HDATA_WIDTH                     = 32
@@ -146,7 +146,7 @@ module ahblite_interconnect_masterport #(
             );
             assign nx_priority[mst_sel] =   nx_grant[mst_sel] ? {(PRIORITY_WIDTH){1'b1}} :
                                             flag_larger_equal[mst_sel] ? priority_lat[0] :
-                                            priority_lat[0] - {(PRIORITY_WIDTH-1){1'b0}, 1'b1};
+                                            priority_lat[0] - {{(PRIORITY_WIDTH-1){1'b0}}, 1'b1};
             
             always_ff @(posedge HCLK or negedge HRESETn) begin
                 if(~HRESETn) begin
@@ -170,7 +170,7 @@ module ahblite_interconnect_masterport #(
     //#--> arbiter - asserted request check
     generate
         for(level_sel=0; level_sel<PRIORITY_LEVEL; level_sel++) begin : or_asserted_req_mapped__GEN
-            for(mst_sel=0; master_sel<MASTER; mst_sel++) begin : or_priority_asserted_mapped_bit__GEN
+            for(mst_sel=0; mst_sel<MASTER; mst_sel++) begin : or_priority_asserted_mapped_bit__GEN
                 assign or_asserted_req_mapped[level_sel][mst_sel] = req_level[mst_sel][level_sel];
             end
         end
@@ -190,10 +190,10 @@ module ahblite_interconnect_masterport #(
         end else if(PRIORITY_LEVEL > 2) begin
             for(level_sel=2; level_sel<PRIORITY_LEVEL; level_sel++) begin
                 for(temp=0; temp<level_sel; temp++) begin
-                    assign reg_en_gating_in[level_sel][temp] = or_asserted_req[temp];
+                    assign req_en_gating_in[level_sel][temp] = or_asserted_req[temp];
                 end
                 for(temp=level_sel; temp<PRIORITY_LEVEL; temp++) begin
-                    assign reg_en_gating_in[level_sel][temp] = 1'b0;
+                    assign req_en_gating_in[level_sel][temp] = 1'b0;
                 end
             end
         end
@@ -214,7 +214,7 @@ module ahblite_interconnect_masterport #(
     //#--> arbiter - request mask
     generate
         for(mst_sel=0; mst_sel<MASTER; mst_sel++) begin : req_mask__GEN
-            for(level_sel=0; level_sel<PRIORITY_LEVEL; level++) begin : req_mask_bit__GEN
+            for(level_sel=0; level_sel<PRIORITY_LEVEL; level_sel++) begin : req_mask_bit__GEN
                 assign req_mask[mst_sel][level_sel] = req_en[level_sel] & req_level[mst_sel][level_sel];
             end
         end

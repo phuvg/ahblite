@@ -105,6 +105,7 @@ module ahblite_interconnect_masterport #(
     logic   [SLAVE-1:0][HADDR_WIDTH-1:0]            mst_addr_valid;
     logic   [SLAVE-1:0][HADDR_WIDTH-1:0]            slv_addr_valid;
     logic   [SLAVE-1:0]                             hsel;
+    logic   [SLAVE-1:0]                             mst_HSEL_lat;
 
     //#--> slave selection
     logic   [SLAVE-1:0][SLAVE_WIDTH-1:0]            slv_decode;
@@ -132,7 +133,7 @@ module ahblite_interconnect_masterport #(
     //design description
     ////////////////////////////////////////////////////////////////////////////
     //#--> latch master's command
-    assign nx_HTRANS =  mst_HREADY_i ? mst_HTRANS_i : mst_HTRANS_lat;
+    assign nx_HTRANS =  slv_HREADY_i[cr_slave] ? mst_HTRANS_i : mst_HTRANS_lat;
     always_ff @(posedge HCLK or negedge HRESETn) begin
         if(~HRESETn) begin
             mst_HTRANS_lat <= 2'h0;
@@ -227,7 +228,7 @@ module ahblite_interconnect_masterport #(
 
     //#--> address decode: generate HSEL
     generate
-        for(slv_sel=0; slv_sel<SLAVE; slave_sel++) begin : HSEL__GEN
+        for(slv_sel=0; slv_sel<SLAVE; slv_sel++) begin : HSEL__GEN
             assign mst_addr_valid[slv_sel] = mst_HADDR_i & slv_HADDR_mask_i[slv_sel];
             assign slv_addr_valid[slv_sel] = slv_HADDR_base_i[slv_sel] & slv_HADDR_mask_i[slv_sel];
             assign hsel[slv_sel] = &(mst_addr_valid[slv_sel] ~^ slv_addr_valid[slv_sel]);
@@ -246,7 +247,7 @@ module ahblite_interconnect_masterport #(
 
     //#--> slave selection
     generate
-        slv_decode[0] = mst_HSEL_o[0] ? 'h0 : slv_decode_lat;
+        assign slv_decode[0] = mst_HSEL_o[0] ? 'h0 : slv_decode_lat;
         for(slv_sel=1; slv_sel<SLAVE; slv_sel++) begin
             assign slv_decode[slv_sel] = mst_HSEL_o[slv_sel] ? slv_sel : slv_decode[slv_sel-1];
         end
@@ -292,7 +293,7 @@ module ahblite_interconnect_masterport #(
     //#--> switch
     generate
         for(slv_sel=0; slv_sel<SLAVE; slv_sel++) begin
-            assign mst_switch_o[slv_sel] = mst_HREADY_i[slv_sel] & mst_grant_i[slv_sel] & (htrans_idle | htrans_nonseq);
+            assign mst_switch_o[slv_sel] = slv_HREADY_i[cr_slave] & mst_grant_i[slv_sel] & (htrans_idle | htrans_nonseq);
         end
     endgenerate
 
