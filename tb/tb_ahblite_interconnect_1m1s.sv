@@ -153,6 +153,14 @@ module tb_ahblite_interconnect_1m1s();
         init_mst();
         init_slv();
 
+        //#--> reset
+        #(3*CYCLE) HRESETn = 1'h0;
+        #(2*CYCLE) HRESETn = 1'h1;
+
+        //#--> slave address
+        slv_HADDR_base = 'h1000_0000;
+        slv_HADDR_mask = 'hf000_0000;
+
         //#--> finish
         #(20*CYCLE) $finish;
     end
@@ -202,6 +210,6 @@ module tb_ahblite_interconnect_1m1s();
     ////////////////////////////////////////////////////////////////////////////
     initial begin
         $dumpfile("wf_ahblite_interconnect_1m1s.vcd");
-        $dumpvars(tb_ahblite_interconnect_1m1s);
+        $dumpvars(0, tb_ahblite_interconnect_1m1s);
     end
 endmodule

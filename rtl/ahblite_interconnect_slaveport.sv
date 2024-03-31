@@ -137,7 +137,7 @@ module ahblite_interconnect_slaveport #(
 
     generate
         for(mst_sel=0; mst_sel<MASTER; mst_sel++) begin : nx_priority__GEN
-            ahblite_interconnect_comparenbit #(
+            ahblite_interconnect_compare_nbit #(
                 .WIDTH(MASTER)
             ) comp_00 (
                 .comp_o(flag_larger_equal[mst_sel]),

@@ -1,0 +1,1838 @@
+$date
+	Fri Mar 29 09:13:04 2024
+$end
+$version
+	QuestaSim Version 10.4c
+$end
+$timescale
+	10ps
+$end
+
+$scope module tb_ahblite_interconnect_1m1s $end
+$var parameter 32 ! CYCLE $end
+$var parameter 32 " MASTER $end
+$var parameter 32 # SLAVE $end
+$var parameter 32 $ HADDR_WIDTH $end
+$var parameter 32 % HDATA_WIDTH $end
+$var parameter 2 & IDLE $end
+$var parameter 2 ' BUSY $end
+$var parameter 2 ( NONSEQ $end
+$var parameter 2 ) SEQ $end
+$var parameter 3 * SINGLE $end
+$var parameter 3 + INCR $end
+$var parameter 3 , WRAP4 $end
+$var parameter 3 - INCR4 $end
+$var parameter 3 . BYTE $end
+$var parameter 3 / HALFWORD $end
+$var parameter 3 0 WORD $end
+$var parameter 1 1 WRITE $end
+$var parameter 1 2 READ $end
+$var reg 1 3 HCLK $end
+$var reg 1 4 HRESETn $end
+$var reg 32 5 mst_HRDATA [31:0] $end
+$var reg 1 6 mst_HREADYOUT [0:0] $end
+$var reg 2 7 mst_HTRANS [1:0] $end
+$var reg 3 8 mst_HBURST [2:0] $end
+$var reg 3 9 mst_HSIZE [2:0] $end
+$var reg 1 : mst_HWRITE [0:0] $end
+$var reg 32 ; mst_HADDR [31:0] $end
+$var reg 32 < mst_HWDATA [31:0] $end
+$var reg 1 = mst_HMASTLOCK [0:0] $end
+$var reg 7 > mst_HPROT [6:0] $end
+$var reg 1 ? mst_HNONSEC [0:0] $end
+$var reg 1 @ mst_HEXCL [0:0] $end
+$var reg 4 A mst_HMASTER [3:0] $end
+$var reg 1 B mst_HREADY [0:0] $end
+$var reg 2 C slv_HTRANS [1:0] $end
+$var reg 3 D slv_HBURST [2:0] $end
+$var reg 3 E slv_HSIZE [2:0] $end
+$var reg 1 F slv_HWRITE [0:0] $end
+$var reg 32 G slv_HADDR [31:0] $end
+$var reg 32 H slv_HWDATA [31:0] $end
+$var reg 1 I slv_HMASTLOCK [0:0] $end
+$var reg 7 J slv_HPROT [6:0] $end
+$var reg 1 K slv_HNONSEC [0:0] $end
+$var reg 1 L slv_HEXCL [0:0] $end
+$var reg 4 M slv_HMASTER [3:0] $end
+$var reg 1 N slv_HREADYOUT [0:0] $end
+$var reg 32 O slv_HRDATA [31:0] $end
+$var reg 1 P slv_HREADY [0:0] $end
+$var reg 1 Q slv_HRESP [0:0] $end
+$var reg 1 R slv_HEXOKAY [0:0] $end
+$var reg 32 S slv_HADDR_base [31:0] $end
+$var reg 32 T slv_HADDR_mask [31:0] $end
+
+$scope task init_mst $end
+$upscope $end
+
+$scope task init_slv $end
+$upscope $end
+
+$scope module inst_interconnect $end
+$var parameter 32 U MASTER $end
+$var parameter 32 V SLAVE $end
+$var parameter 32 W HADDR_WIDTH $end
+$var parameter 32 X HDATA_WIDTH $end
+$var wire 1 Y HCLK $end
+$var wire 1 Z HRESETn $end
+$var reg 32 [ mst_HRDATA_o [31:0] $end
+$var reg 1 \ mst_HREADYOUT_o [0:0] $end
+$var wire 1 ] mst_HTRANS_i [0] $end
+$var wire 1 ^ mst_HTRANS_i [1] $end
+$var wire 1 _ mst_HBURST_i [0] $end
+$var wire 1 ` mst_HBURST_i [1] $end
+$var wire 1 a mst_HBURST_i [2] $end
+$var wire 1 b mst_HSIZE_i [0] $end
+$var wire 1 c mst_HSIZE_i [1] $end
+$var wire 1 d mst_HSIZE_i [2] $end
+$var wire 1 e mst_HWRITE_i [0] $end
+$var wire 1 f mst_HADDR_i [0] $end
+$var wire 1 g mst_HADDR_i [1] $end
+$var wire 1 h mst_HADDR_i [2] $end
+$var wire 1 i mst_HADDR_i [3] $end
+$var wire 1 j mst_HADDR_i [4] $end
+$var wire 1 k mst_HADDR_i [5] $end
+$var wire 1 l mst_HADDR_i [6] $end
+$var wire 1 m mst_HADDR_i [7] $end
+$var wire 1 n mst_HADDR_i [8] $end
+$var wire 1 o mst_HADDR_i [9] $end
+$var wire 1 p mst_HADDR_i [10] $end
+$var wire 1 q mst_HADDR_i [11] $end
+$var wire 1 r mst_HADDR_i [12] $end
+$var wire 1 s mst_HADDR_i [13] $end
+$var wire 1 t mst_HADDR_i [14] $end
+$var wire 1 u mst_HADDR_i [15] $end
+$var wire 1 v mst_HADDR_i [16] $end
+$var wire 1 w mst_HADDR_i [17] $end
+$var wire 1 x mst_HADDR_i [18] $end
+$var wire 1 y mst_HADDR_i [19] $end
+$var wire 1 z mst_HADDR_i [20] $end
+$var wire 1 { mst_HADDR_i [21] $end
+$var wire 1 | mst_HADDR_i [22] $end
+$var wire 1 } mst_HADDR_i [23] $end
+$var wire 1 ~ mst_HADDR_i [24] $end
+$var wire 1 !! mst_HADDR_i [25] $end
+$var wire 1 "! mst_HADDR_i [26] $end
+$var wire 1 #! mst_HADDR_i [27] $end
+$var wire 1 $! mst_HADDR_i [28] $end
+$var wire 1 %! mst_HADDR_i [29] $end
+$var wire 1 &! mst_HADDR_i [30] $end
+$var wire 1 '! mst_HADDR_i [31] $end
+$var wire 1 (! mst_HWDATA_i [0] $end
+$var wire 1 )! mst_HWDATA_i [1] $end
+$var wire 1 *! mst_HWDATA_i [2] $end
+$var wire 1 +! mst_HWDATA_i [3] $end
+$var wire 1 ,! mst_HWDATA_i [4] $end
+$var wire 1 -! mst_HWDATA_i [5] $end
+$var wire 1 .! mst_HWDATA_i [6] $end
+$var wire 1 /! mst_HWDATA_i [7] $end
+$var wire 1 0! mst_HWDATA_i [8] $end
+$var wire 1 1! mst_HWDATA_i [9] $end
+$var wire 1 2! mst_HWDATA_i [10] $end
+$var wire 1 3! mst_HWDATA_i [11] $end
+$var wire 1 4! mst_HWDATA_i [12] $end
+$var wire 1 5! mst_HWDATA_i [13] $end
+$var wire 1 6! mst_HWDATA_i [14] $end
+$var wire 1 7! mst_HWDATA_i [15] $end
+$var wire 1 8! mst_HWDATA_i [16] $end
+$var wire 1 9! mst_HWDATA_i [17] $end
+$var wire 1 :! mst_HWDATA_i [18] $end
+$var wire 1 ;! mst_HWDATA_i [19] $end
+$var wire 1 <! mst_HWDATA_i [20] $end
+$var wire 1 =! mst_HWDATA_i [21] $end
+$var wire 1 >! mst_HWDATA_i [22] $end
+$var wire 1 ?! mst_HWDATA_i [23] $end
+$var wire 1 @! mst_HWDATA_i [24] $end
+$var wire 1 A! mst_HWDATA_i [25] $end
+$var wire 1 B! mst_HWDATA_i [26] $end
+$var wire 1 C! mst_HWDATA_i [27] $end
+$var wire 1 D! mst_HWDATA_i [28] $end
+$var wire 1 E! mst_HWDATA_i [29] $end
+$var wire 1 F! mst_HWDATA_i [30] $end
+$var wire 1 G! mst_HWDATA_i [31] $end
+$var wire 1 H! mst_HMASTLOCK_i [0] $end
+$var wire 1 I! mst_HPROT_i [0] $end
+$var wire 1 J! mst_HPROT_i [1] $end
+$var wire 1 K! mst_HPROT_i [2] $end
+$var wire 1 L! mst_HPROT_i [3] $end
+$var wire 1 M! mst_HPROT_i [4] $end
+$var wire 1 N! mst_HPROT_i [5] $end
+$var wire 1 O! mst_HPROT_i [6] $end
+$var wire 1 P! mst_HNONSEC_i [0] $end
+$var wire 1 Q! mst_HEXCL_i [0] $end
+$var wire 1 R! mst_HMASTER_i [0] $end
+$var wire 1 S! mst_HMASTER_i [1] $end
+$var wire 1 T! mst_HMASTER_i [2] $end
+$var wire 1 U! mst_HMASTER_i [3] $end
+$var wire 1 V! mst_HREADY_i [0] $end
+$var reg 2 W! slv_HTRANS_o [1:0] $end
+$var reg 3 X! slv_HBURST_o [2:0] $end
+$var reg 3 Y! slv_HSIZE_o [2:0] $end
+$var reg 1 Z! slv_HWRITE_o [0:0] $end
+$var reg 32 [! slv_HADDR_o [31:0] $end
+$var reg 32 \! slv_HWDATA_o [31:0] $end
+$var reg 1 ]! slv_HMASTLOCK_o [0:0] $end
+$var reg 7 ^! slv_HPROT_o [6:0] $end
+$var reg 1 _! slv_HNONSEC_o [0:0] $end
+$var reg 1 `! slv_HEXCL_o [0:0] $end
+$var reg 4 a! slv_HMASTER_o [3:0] $end
+$var reg 1 b! slv_HREADYOUT_o [0:0] $end
+$var wire 1 c! slv_HRDATA_i [0] $end
+$var wire 1 d! slv_HRDATA_i [1] $end
+$var wire 1 e! slv_HRDATA_i [2] $end
+$var wire 1 f! slv_HRDATA_i [3] $end
+$var wire 1 g! slv_HRDATA_i [4] $end
+$var wire 1 h! slv_HRDATA_i [5] $end
+$var wire 1 i! slv_HRDATA_i [6] $end
+$var wire 1 j! slv_HRDATA_i [7] $end
+$var wire 1 k! slv_HRDATA_i [8] $end
+$var wire 1 l! slv_HRDATA_i [9] $end
+$var wire 1 m! slv_HRDATA_i [10] $end
+$var wire 1 n! slv_HRDATA_i [11] $end
+$var wire 1 o! slv_HRDATA_i [12] $end
+$var wire 1 p! slv_HRDATA_i [13] $end
+$var wire 1 q! slv_HRDATA_i [14] $end
+$var wire 1 r! slv_HRDATA_i [15] $end
+$var wire 1 s! slv_HRDATA_i [16] $end
+$var wire 1 t! slv_HRDATA_i [17] $end
+$var wire 1 u! slv_HRDATA_i [18] $end
+$var wire 1 v! slv_HRDATA_i [19] $end
+$var wire 1 w! slv_HRDATA_i [20] $end
+$var wire 1 x! slv_HRDATA_i [21] $end
+$var wire 1 y! slv_HRDATA_i [22] $end
+$var wire 1 z! slv_HRDATA_i [23] $end
+$var wire 1 {! slv_HRDATA_i [24] $end
+$var wire 1 |! slv_HRDATA_i [25] $end
+$var wire 1 }! slv_HRDATA_i [26] $end
+$var wire 1 ~! slv_HRDATA_i [27] $end
+$var wire 1 !" slv_HRDATA_i [28] $end
+$var wire 1 "" slv_HRDATA_i [29] $end
+$var wire 1 #" slv_HRDATA_i [30] $end
+$var wire 1 $" slv_HRDATA_i [31] $end
+$var wire 1 %" slv_HREADY_i [0] $end
+$var wire 1 &" slv_HRESP_i [0] $end
+$var wire 1 '" slv_HEXOKAY_i [0] $end
+$var wire 1 (" slv_HADDR_base_i [0] $end
+$var wire 1 )" slv_HADDR_base_i [1] $end
+$var wire 1 *" slv_HADDR_base_i [2] $end
+$var wire 1 +" slv_HADDR_base_i [3] $end
+$var wire 1 ," slv_HADDR_base_i [4] $end
+$var wire 1 -" slv_HADDR_base_i [5] $end
+$var wire 1 ." slv_HADDR_base_i [6] $end
+$var wire 1 /" slv_HADDR_base_i [7] $end
+$var wire 1 0" slv_HADDR_base_i [8] $end
+$var wire 1 1" slv_HADDR_base_i [9] $end
+$var wire 1 2" slv_HADDR_base_i [10] $end
+$var wire 1 3" slv_HADDR_base_i [11] $end
+$var wire 1 4" slv_HADDR_base_i [12] $end
+$var wire 1 5" slv_HADDR_base_i [13] $end
+$var wire 1 6" slv_HADDR_base_i [14] $end
+$var wire 1 7" slv_HADDR_base_i [15] $end
+$var wire 1 8" slv_HADDR_base_i [16] $end
+$var wire 1 9" slv_HADDR_base_i [17] $end
+$var wire 1 :" slv_HADDR_base_i [18] $end
+$var wire 1 ;" slv_HADDR_base_i [19] $end
+$var wire 1 <" slv_HADDR_base_i [20] $end
+$var wire 1 =" slv_HADDR_base_i [21] $end
+$var wire 1 >" slv_HADDR_base_i [22] $end
+$var wire 1 ?" slv_HADDR_base_i [23] $end
+$var wire 1 @" slv_HADDR_base_i [24] $end
+$var wire 1 A" slv_HADDR_base_i [25] $end
+$var wire 1 B" slv_HADDR_base_i [26] $end
+$var wire 1 C" slv_HADDR_base_i [27] $end
+$var wire 1 D" slv_HADDR_base_i [28] $end
+$var wire 1 E" slv_HADDR_base_i [29] $end
+$var wire 1 F" slv_HADDR_base_i [30] $end
+$var wire 1 G" slv_HADDR_base_i [31] $end
+$var wire 1 H" slv_HADDR_mask_i [0] $end
+$var wire 1 I" slv_HADDR_mask_i [1] $end
+$var wire 1 J" slv_HADDR_mask_i [2] $end
+$var wire 1 K" slv_HADDR_mask_i [3] $end
+$var wire 1 L" slv_HADDR_mask_i [4] $end
+$var wire 1 M" slv_HADDR_mask_i [5] $end
+$var wire 1 N" slv_HADDR_mask_i [6] $end
+$var wire 1 O" slv_HADDR_mask_i [7] $end
+$var wire 1 P" slv_HADDR_mask_i [8] $end
+$var wire 1 Q" slv_HADDR_mask_i [9] $end
+$var wire 1 R" slv_HADDR_mask_i [10] $end
+$var wire 1 S" slv_HADDR_mask_i [11] $end
+$var wire 1 T" slv_HADDR_mask_i [12] $end
+$var wire 1 U" slv_HADDR_mask_i [13] $end
+$var wire 1 V" slv_HADDR_mask_i [14] $end
+$var wire 1 W" slv_HADDR_mask_i [15] $end
+$var wire 1 X" slv_HADDR_mask_i [16] $end
+$var wire 1 Y" slv_HADDR_mask_i [17] $end
+$var wire 1 Z" slv_HADDR_mask_i [18] $end
+$var wire 1 [" slv_HADDR_mask_i [19] $end
+$var wire 1 \" slv_HADDR_mask_i [20] $end
+$var wire 1 ]" slv_HADDR_mask_i [21] $end
+$var wire 1 ^" slv_HADDR_mask_i [22] $end
+$var wire 1 _" slv_HADDR_mask_i [23] $end
+$var wire 1 `" slv_HADDR_mask_i [24] $end
+$var wire 1 a" slv_HADDR_mask_i [25] $end
+$var wire 1 b" slv_HADDR_mask_i [26] $end
+$var wire 1 c" slv_HADDR_mask_i [27] $end
+$var wire 1 d" slv_HADDR_mask_i [28] $end
+$var wire 1 e" slv_HADDR_mask_i [29] $end
+$var wire 1 f" slv_HADDR_mask_i [30] $end
+$var wire 1 g" slv_HADDR_mask_i [31] $end
+$var reg 2 h" from_mst_HTRANS [1:0] $end
+$var reg 3 i" from_mst_HBURST [2:0] $end
+$var reg 3 j" from_mst_HSIZE [2:0] $end
+$var reg 1 k" from_mst_HWRITE $end
+$var reg 32 l" from_mst_HADDR [31:0] $end
+$var reg 32 m" from_mst_HWDATA [31:0] $end
+$var reg 1 n" from_mst_HMASTLOCK $end
+$var reg 7 o" from_mst_HPROT [6:0] $end
+$var reg 1 p" from_mst_HNONSEC $end
+$var reg 1 q" from_mst_HEXCL $end
+$var reg 4 r" from_mst_HMASTER [3:0] $end
+$var reg 1 s" from_mst_HREADYOUT $end
+$var reg 2 t" to_slv_HTRANS [1:0] $end
+$var reg 3 u" to_slv_HBURST [2:0] $end
+$var reg 3 v" to_slv_HSIZE [2:0] $end
+$var reg 1 w" to_slv_HWRITE $end
+$var reg 32 x" to_slv_HADDR [31:0] $end
+$var reg 32 y" to_slv_HWDATA [31:0] $end
+$var reg 1 z" to_slv_HMASTLOCK $end
+$var reg 7 {" to_slv_HPROT [6:0] $end
+$var reg 1 |" to_slv_HNONSEC $end
+$var reg 1 }" to_slv_HEXCL $end
+$var reg 4 ~" to_slv_HMASTER [3:0] $end
+$var reg 1 !# to_slv_HREADY $end
+$var reg 32 "# from_slv_HRDATA [31:0] $end
+$var reg 1 ## from_slv_HREADYOUT $end
+$var reg 1 $# from_slv_HRESP $end
+$var reg 1 %# from_slv_HEXOKAY $end
+$var reg 32 &# to_mst_HRDATA [31:0] $end
+$var reg 1 '# to_mst_HREADY $end
+$var reg 1 (# to_mst_HRESP $end
+$var reg 1 )# to_mst_HEXOKAY $end
+$var reg 1 *# from_slv_mst_grant $end
+$var reg 32 +# from_slv_slv_HADDR_base [31:0] $end
+$var reg 32 ,# from_slv_slv_HADDR_mask [31:0] $end
+$var reg 32 -# to_mst_slv_HADDR_base [31:0] $end
+$var reg 32 .# to_mst_slv_HADDR_mask [31:0] $end
+$var reg 1 /# to_mst_mst_grant $end
+$var reg 1 0# from_mst_mst_HSEL $end
+$var reg 1 1# from_mst_mst_switch $end
+$var reg 1 2# to_slv_mst_switch $end
+$var reg 1 3# to_slv_mst_HSEL $end
+
+$scope begin slaveport__GEN[0] $end
+$var parameter 32 4# slv_sel $end
+
+$scope module slaveport $end
+$var parameter 32 5# MASTER $end
+$var parameter 32 6# HADDR_WIDTH $end
+$var parameter 32 7# HDATA_WIDTH $end
+$var parameter 32 8# PRIORITY_WIDTH $end
+$var parameter 32 9# PRIORITY_LEVEL $end
+$var wire 1 Y HCLK $end
+$var wire 1 Z HRESETn $end
+$var reg 32 :# mst_HRDATA_o [31:0] $end
+$var reg 1 ;# mst_HREADYOUT_o [0:0] $end
+$var reg 1 <# mst_HRESP_o [0:0] $end
+$var reg 1 =# mst_HEXOKAY_o [0:0] $end
+$var wire 1 ># mst_HTRANS_i [0] $end
+$var wire 1 ?# mst_HTRANS_i [1] $end
+$var wire 1 @# mst_HBURST_i [0] $end
+$var wire 1 A# mst_HBURST_i [1] $end
+$var wire 1 B# mst_HBURST_i [2] $end
+$var wire 1 C# mst_HSIZE_i [0] $end
+$var wire 1 D# mst_HSIZE_i [1] $end
+$var wire 1 E# mst_HSIZE_i [2] $end
+$var wire 1 F# mst_HWRITE_i [0] $end
+$var wire 1 G# mst_HADDR_i [0] $end
+$var wire 1 H# mst_HADDR_i [1] $end
+$var wire 1 I# mst_HADDR_i [2] $end
+$var wire 1 J# mst_HADDR_i [3] $end
+$var wire 1 K# mst_HADDR_i [4] $end
+$var wire 1 L# mst_HADDR_i [5] $end
+$var wire 1 M# mst_HADDR_i [6] $end
+$var wire 1 N# mst_HADDR_i [7] $end
+$var wire 1 O# mst_HADDR_i [8] $end
+$var wire 1 P# mst_HADDR_i [9] $end
+$var wire 1 Q# mst_HADDR_i [10] $end
+$var wire 1 R# mst_HADDR_i [11] $end
+$var wire 1 S# mst_HADDR_i [12] $end
+$var wire 1 T# mst_HADDR_i [13] $end
+$var wire 1 U# mst_HADDR_i [14] $end
+$var wire 1 V# mst_HADDR_i [15] $end
+$var wire 1 W# mst_HADDR_i [16] $end
+$var wire 1 X# mst_HADDR_i [17] $end
+$var wire 1 Y# mst_HADDR_i [18] $end
+$var wire 1 Z# mst_HADDR_i [19] $end
+$var wire 1 [# mst_HADDR_i [20] $end
+$var wire 1 \# mst_HADDR_i [21] $end
+$var wire 1 ]# mst_HADDR_i [22] $end
+$var wire 1 ^# mst_HADDR_i [23] $end
+$var wire 1 _# mst_HADDR_i [24] $end
+$var wire 1 `# mst_HADDR_i [25] $end
+$var wire 1 a# mst_HADDR_i [26] $end
+$var wire 1 b# mst_HADDR_i [27] $end
+$var wire 1 c# mst_HADDR_i [28] $end
+$var wire 1 d# mst_HADDR_i [29] $end
+$var wire 1 e# mst_HADDR_i [30] $end
+$var wire 1 f# mst_HADDR_i [31] $end
+$var wire 1 g# mst_HWDATA_i [0] $end
+$var wire 1 h# mst_HWDATA_i [1] $end
+$var wire 1 i# mst_HWDATA_i [2] $end
+$var wire 1 j# mst_HWDATA_i [3] $end
+$var wire 1 k# mst_HWDATA_i [4] $end
+$var wire 1 l# mst_HWDATA_i [5] $end
+$var wire 1 m# mst_HWDATA_i [6] $end
+$var wire 1 n# mst_HWDATA_i [7] $end
+$var wire 1 o# mst_HWDATA_i [8] $end
+$var wire 1 p# mst_HWDATA_i [9] $end
+$var wire 1 q# mst_HWDATA_i [10] $end
+$var wire 1 r# mst_HWDATA_i [11] $end
+$var wire 1 s# mst_HWDATA_i [12] $end
+$var wire 1 t# mst_HWDATA_i [13] $end
+$var wire 1 u# mst_HWDATA_i [14] $end
+$var wire 1 v# mst_HWDATA_i [15] $end
+$var wire 1 w# mst_HWDATA_i [16] $end
+$var wire 1 x# mst_HWDATA_i [17] $end
+$var wire 1 y# mst_HWDATA_i [18] $end
+$var wire 1 z# mst_HWDATA_i [19] $end
+$var wire 1 {# mst_HWDATA_i [20] $end
+$var wire 1 |# mst_HWDATA_i [21] $end
+$var wire 1 }# mst_HWDATA_i [22] $end
+$var wire 1 ~# mst_HWDATA_i [23] $end
+$var wire 1 !$ mst_HWDATA_i [24] $end
+$var wire 1 "$ mst_HWDATA_i [25] $end
+$var wire 1 #$ mst_HWDATA_i [26] $end
+$var wire 1 $$ mst_HWDATA_i [27] $end
+$var wire 1 %$ mst_HWDATA_i [28] $end
+$var wire 1 &$ mst_HWDATA_i [29] $end
+$var wire 1 '$ mst_HWDATA_i [30] $end
+$var wire 1 ($ mst_HWDATA_i [31] $end
+$var wire 1 )$ mst_HMASTLOCK_i [0] $end
+$var wire 1 *$ mst_HPROT_i [0] $end
+$var wire 1 +$ mst_HPROT_i [1] $end
+$var wire 1 ,$ mst_HPROT_i [2] $end
+$var wire 1 -$ mst_HPROT_i [3] $end
+$var wire 1 .$ mst_HPROT_i [4] $end
+$var wire 1 /$ mst_HPROT_i [5] $end
+$var wire 1 0$ mst_HPROT_i [6] $end
+$var wire 1 1$ mst_HNONSEC_i [0] $end
+$var wire 1 2$ mst_HEXCL_i [0] $end
+$var wire 1 3$ mst_HMASTER_i [0] $end
+$var wire 1 4$ mst_HMASTER_i [1] $end
+$var wire 1 5$ mst_HMASTER_i [2] $end
+$var wire 1 6$ mst_HMASTER_i [3] $end
+$var wire 1 7$ mst_HREADY_i [0] $end
+$var reg 2 8$ slv_HTRANS_o [1:0] $end
+$var reg 3 9$ slv_HBURST_o [2:0] $end
+$var reg 3 :$ slv_HSIZE_o [2:0] $end
+$var reg 1 ;$ slv_HWRITE_o $end
+$var reg 32 <$ slv_HADDR_o [31:0] $end
+$var reg 32 =$ slv_HWDATA_o [31:0] $end
+$var reg 1 >$ slv_HMASTLOCK_o $end
+$var reg 7 ?$ slv_HPROT_o [6:0] $end
+$var reg 1 @$ slv_HNONSEC_o $end
+$var reg 1 A$ slv_HEXCL_o $end
+$var reg 4 B$ slv_HMASTER_o [3:0] $end
+$var reg 1 C$ slv_HREADYOUT_o $end
+$var wire 1 $" slv_HRDATA_i [31] $end
+$var wire 1 #" slv_HRDATA_i [30] $end
+$var wire 1 "" slv_HRDATA_i [29] $end
+$var wire 1 !" slv_HRDATA_i [28] $end
+$var wire 1 ~! slv_HRDATA_i [27] $end
+$var wire 1 }! slv_HRDATA_i [26] $end
+$var wire 1 |! slv_HRDATA_i [25] $end
+$var wire 1 {! slv_HRDATA_i [24] $end
+$var wire 1 z! slv_HRDATA_i [23] $end
+$var wire 1 y! slv_HRDATA_i [22] $end
+$var wire 1 x! slv_HRDATA_i [21] $end
+$var wire 1 w! slv_HRDATA_i [20] $end
+$var wire 1 v! slv_HRDATA_i [19] $end
+$var wire 1 u! slv_HRDATA_i [18] $end
+$var wire 1 t! slv_HRDATA_i [17] $end
+$var wire 1 s! slv_HRDATA_i [16] $end
+$var wire 1 r! slv_HRDATA_i [15] $end
+$var wire 1 q! slv_HRDATA_i [14] $end
+$var wire 1 p! slv_HRDATA_i [13] $end
+$var wire 1 o! slv_HRDATA_i [12] $end
+$var wire 1 n! slv_HRDATA_i [11] $end
+$var wire 1 m! slv_HRDATA_i [10] $end
+$var wire 1 l! slv_HRDATA_i [9] $end
+$var wire 1 k! slv_HRDATA_i [8] $end
+$var wire 1 j! slv_HRDATA_i [7] $end
+$var wire 1 i! slv_HRDATA_i [6] $end
+$var wire 1 h! slv_HRDATA_i [5] $end
+$var wire 1 g! slv_HRDATA_i [4] $end
+$var wire 1 f! slv_HRDATA_i [3] $end
+$var wire 1 e! slv_HRDATA_i [2] $end
+$var wire 1 d! slv_HRDATA_i [1] $end
+$var wire 1 c! slv_HRDATA_i [0] $end
+$var wire 1 %" slv_HREADY_i $end
+$var wire 1 &" slv_HRESP_i $end
+$var wire 1 '" slv_HEXOKAY_i $end
+$var wire 1 G" slv_HADDR_base_i [31] $end
+$var wire 1 F" slv_HADDR_base_i [30] $end
+$var wire 1 E" slv_HADDR_base_i [29] $end
+$var wire 1 D" slv_HADDR_base_i [28] $end
+$var wire 1 C" slv_HADDR_base_i [27] $end
+$var wire 1 B" slv_HADDR_base_i [26] $end
+$var wire 1 A" slv_HADDR_base_i [25] $end
+$var wire 1 @" slv_HADDR_base_i [24] $end
+$var wire 1 ?" slv_HADDR_base_i [23] $end
+$var wire 1 >" slv_HADDR_base_i [22] $end
+$var wire 1 =" slv_HADDR_base_i [21] $end
+$var wire 1 <" slv_HADDR_base_i [20] $end
+$var wire 1 ;" slv_HADDR_base_i [19] $end
+$var wire 1 :" slv_HADDR_base_i [18] $end
+$var wire 1 9" slv_HADDR_base_i [17] $end
+$var wire 1 8" slv_HADDR_base_i [16] $end
+$var wire 1 7" slv_HADDR_base_i [15] $end
+$var wire 1 6" slv_HADDR_base_i [14] $end
+$var wire 1 5" slv_HADDR_base_i [13] $end
+$var wire 1 4" slv_HADDR_base_i [12] $end
+$var wire 1 3" slv_HADDR_base_i [11] $end
+$var wire 1 2" slv_HADDR_base_i [10] $end
+$var wire 1 1" slv_HADDR_base_i [9] $end
+$var wire 1 0" slv_HADDR_base_i [8] $end
+$var wire 1 /" slv_HADDR_base_i [7] $end
+$var wire 1 ." slv_HADDR_base_i [6] $end
+$var wire 1 -" slv_HADDR_base_i [5] $end
+$var wire 1 ," slv_HADDR_base_i [4] $end
+$var wire 1 +" slv_HADDR_base_i [3] $end
+$var wire 1 *" slv_HADDR_base_i [2] $end
+$var wire 1 )" slv_HADDR_base_i [1] $end
+$var wire 1 (" slv_HADDR_base_i [0] $end
+$var wire 1 g" slv_HADDR_mask_i [31] $end
+$var wire 1 f" slv_HADDR_mask_i [30] $end
+$var wire 1 e" slv_HADDR_mask_i [29] $end
+$var wire 1 d" slv_HADDR_mask_i [28] $end
+$var wire 1 c" slv_HADDR_mask_i [27] $end
+$var wire 1 b" slv_HADDR_mask_i [26] $end
+$var wire 1 a" slv_HADDR_mask_i [25] $end
+$var wire 1 `" slv_HADDR_mask_i [24] $end
+$var wire 1 _" slv_HADDR_mask_i [23] $end
+$var wire 1 ^" slv_HADDR_mask_i [22] $end
+$var wire 1 ]" slv_HADDR_mask_i [21] $end
+$var wire 1 \" slv_HADDR_mask_i [20] $end
+$var wire 1 [" slv_HADDR_mask_i [19] $end
+$var wire 1 Z" slv_HADDR_mask_i [18] $end
+$var wire 1 Y" slv_HADDR_mask_i [17] $end
+$var wire 1 X" slv_HADDR_mask_i [16] $end
+$var wire 1 W" slv_HADDR_mask_i [15] $end
+$var wire 1 V" slv_HADDR_mask_i [14] $end
+$var wire 1 U" slv_HADDR_mask_i [13] $end
+$var wire 1 T" slv_HADDR_mask_i [12] $end
+$var wire 1 S" slv_HADDR_mask_i [11] $end
+$var wire 1 R" slv_HADDR_mask_i [10] $end
+$var wire 1 Q" slv_HADDR_mask_i [9] $end
+$var wire 1 P" slv_HADDR_mask_i [8] $end
+$var wire 1 O" slv_HADDR_mask_i [7] $end
+$var wire 1 N" slv_HADDR_mask_i [6] $end
+$var wire 1 M" slv_HADDR_mask_i [5] $end
+$var wire 1 L" slv_HADDR_mask_i [4] $end
+$var wire 1 K" slv_HADDR_mask_i [3] $end
+$var wire 1 J" slv_HADDR_mask_i [2] $end
+$var wire 1 I" slv_HADDR_mask_i [1] $end
+$var wire 1 H" slv_HADDR_mask_i [0] $end
+$var reg 1 D$ mst_grant_o [0:0] $end
+$var reg 32 E$ slv_HADDR_base_o [31:0] $end
+$var reg 32 F$ slv_HADDR_mask_o [31:0] $end
+$var wire 1 G$ mst_switch_i [0] $end
+$var wire 1 H$ mst_HSEL_i [0] $end
+$var reg 1 I$ upd_priority $end
+$var reg 1 J$ priority_lat $end
+$var reg 1 K$ nx_priority $end
+$var reg 1 L$ cr_priority $end
+$var reg 1 M$ flag_larger_equal [0:0] $end
+$var reg 1 N$ req_level $end
+$var reg 1 O$ or_asserted_req_mapped $end
+$var reg 1 P$ or_asserted_req [0:0] $end
+$var reg 1 Q$ req_en_gating_in $end
+$var reg 1 R$ req_en [0:0] $end
+$var reg 1 S$ req_mask $end
+$var reg 1 T$ set_grant [0:0] $end
+$var reg 1 U$ nx_grant [0:0] $end
+$var reg 1 V$ no_grant $end
+$var reg 1 W$ nx_HREADY [0:0] $end
+$var reg 1 X$ int_HREADY [0:0] $end
+$var reg 1 Y$ int_HREADY_lat $end
+$var reg 2 Z$ mst_HTRANS_mx [1:0] $end
+$var reg 3 [$ mst_HBURST_mx [2:0] $end
+$var reg 3 \$ mst_HSIZE_mx [2:0] $end
+$var reg 1 ]$ mst_HWRITE_mx [0:0] $end
+$var reg 32 ^$ mst_HADDR_mx [31:0] $end
+$var reg 32 _$ mst_HWDATA_mx [31:0] $end
+$var reg 1 `$ mst_HMASTLOCK_mx [0:0] $end
+$var reg 7 a$ mst_HPROT_mx [6:0] $end
+$var reg 1 b$ mst_HNONSEC_mx [0:0] $end
+$var reg 1 c$ mst_HEXCL_mx [0:0] $end
+$var reg 4 d$ mst_HMASTER_mx [3:0] $end
+
+$scope begin genblk14[0] $end
+$var parameter 32 e$ mst_sel $end
+$upscope $end
+
+$scope begin mst_HREADYOUT__GEN[0] $end
+$var parameter 32 f$ mst_sel $end
+$upscope $end
+
+$scope begin addr_to_masterport__GEN[0] $end
+$var parameter 32 g$ mst_sel $end
+$upscope $end
+
+$scope begin mst_grant__GEN[0] $end
+$var parameter 32 h$ mst_sel $end
+$upscope $end
+
+$scope begin req_mask__GEN[0] $end
+$var parameter 32 i$ mst_sel $end
+
+$scope begin req_mask_bit__GEN[0] $end
+$var parameter 32 j$ level_sel $end
+$upscope $end
+$upscope $end
+
+$scope begin or_asserted_req__GEN[0] $end
+$var parameter 32 k$ level_sel $end
+$upscope $end
+
+$scope begin or_asserted_req_mapped__GEN[0] $end
+$var parameter 32 l$ level_sel $end
+
+$scope begin or_priority_asserted_mapped_bit__GEN[0] $end
+$var parameter 32 m$ mst_sel $end
+$upscope $end
+$upscope $end
+
+$scope begin req_level__GEN[0] $end
+$var parameter 32 n$ mst_sel $end
+
+$scope begin req_level_bit__GEN[0] $end
+$var parameter 32 o$ level_sel $end
+$upscope $end
+$upscope $end
+
+$scope begin nx_priority__GEN[0] $end
+$var parameter 32 p$ mst_sel $end
+
+$scope module comp_00 $end
+$var parameter 32 q$ WIDTH $end
+$var reg 1 r$ comp_o $end
+$var wire 1 s$ a [0] $end
+$var wire 1 t$ b [0] $end
+$var reg 1 u$ comp [0:0] $end
+
+$scope begin compare_1bit $end
+
+$scope module compare_00 $end
+$var reg 1 v$ comp_o $end
+$var wire 1 w$ flag_le $end
+$var wire 1 s$ a $end
+$var wire 1 s$ b $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+
+$scope begin genblk7 $end
+$upscope $end
+
+$scope begin genblk6 $end
+$upscope $end
+$upscope $end
+$upscope $end
+
+$scope begin masterport__GEN[0] $end
+$var parameter 32 x$ mst_sel $end
+
+$scope module masterport $end
+$var parameter 32 y$ SLAVE $end
+$var parameter 32 z$ HADDR_WIDTH $end
+$var parameter 32 {$ HDATA_WIDTH $end
+$var parameter 2 |$ IDLE $end
+$var parameter 2 }$ BUSY $end
+$var parameter 2 ~$ NONSEQ $end
+$var parameter 2 !% SEQ $end
+$var parameter 32 "% SLAVE_WIDTH $end
+$var wire 1 Y HCLK $end
+$var wire 1 Z HRESETn $end
+$var reg 2 #% slv_HTRANS_o [1:0] $end
+$var reg 3 $% slv_HBURST_o [2:0] $end
+$var reg 3 %% slv_HSIZE_o [2:0] $end
+$var reg 1 &% slv_HWRITE_o [0:0] $end
+$var reg 32 '% slv_HADDR_o [31:0] $end
+$var reg 32 (% slv_HWDATA_o [31:0] $end
+$var reg 1 )% slv_HMASTLOCK_o [0:0] $end
+$var reg 7 *% slv_HPROT_o [6:0] $end
+$var reg 1 +% slv_HNONSEC_o [0:0] $end
+$var reg 1 ,% slv_HEXCL_o [0:0] $end
+$var reg 4 -% slv_HMASTER_o [3:0] $end
+$var reg 1 .% slv_HREADYOUT_o [0:0] $end
+$var wire 1 /% slv_HRDATA_i [0] $end
+$var wire 1 0% slv_HRDATA_i [1] $end
+$var wire 1 1% slv_HRDATA_i [2] $end
+$var wire 1 2% slv_HRDATA_i [3] $end
+$var wire 1 3% slv_HRDATA_i [4] $end
+$var wire 1 4% slv_HRDATA_i [5] $end
+$var wire 1 5% slv_HRDATA_i [6] $end
+$var wire 1 6% slv_HRDATA_i [7] $end
+$var wire 1 7% slv_HRDATA_i [8] $end
+$var wire 1 8% slv_HRDATA_i [9] $end
+$var wire 1 9% slv_HRDATA_i [10] $end
+$var wire 1 :% slv_HRDATA_i [11] $end
+$var wire 1 ;% slv_HRDATA_i [12] $end
+$var wire 1 <% slv_HRDATA_i [13] $end
+$var wire 1 =% slv_HRDATA_i [14] $end
+$var wire 1 >% slv_HRDATA_i [15] $end
+$var wire 1 ?% slv_HRDATA_i [16] $end
+$var wire 1 @% slv_HRDATA_i [17] $end
+$var wire 1 A% slv_HRDATA_i [18] $end
+$var wire 1 B% slv_HRDATA_i [19] $end
+$var wire 1 C% slv_HRDATA_i [20] $end
+$var wire 1 D% slv_HRDATA_i [21] $end
+$var wire 1 E% slv_HRDATA_i [22] $end
+$var wire 1 F% slv_HRDATA_i [23] $end
+$var wire 1 G% slv_HRDATA_i [24] $end
+$var wire 1 H% slv_HRDATA_i [25] $end
+$var wire 1 I% slv_HRDATA_i [26] $end
+$var wire 1 J% slv_HRDATA_i [27] $end
+$var wire 1 K% slv_HRDATA_i [28] $end
+$var wire 1 L% slv_HRDATA_i [29] $end
+$var wire 1 M% slv_HRDATA_i [30] $end
+$var wire 1 N% slv_HRDATA_i [31] $end
+$var wire 1 O% slv_HREADY_i [0] $end
+$var wire 1 P% slv_HRESP_i [0] $end
+$var wire 1 Q% slv_HEXOKAY_i [0] $end
+$var reg 32 R% mst_HRDATA_o [31:0] $end
+$var reg 1 S% mst_HREADYOUT_o $end
+$var wire 1 ^ mst_HTRANS_i [1] $end
+$var wire 1 ] mst_HTRANS_i [0] $end
+$var wire 1 a mst_HBURST_i [2] $end
+$var wire 1 ` mst_HBURST_i [1] $end
+$var wire 1 _ mst_HBURST_i [0] $end
+$var wire 1 d mst_HSIZE_i [2] $end
+$var wire 1 c mst_HSIZE_i [1] $end
+$var wire 1 b mst_HSIZE_i [0] $end
+$var wire 1 e mst_HWRITE_i $end
+$var wire 1 '! mst_HADDR_i [31] $end
+$var wire 1 &! mst_HADDR_i [30] $end
+$var wire 1 %! mst_HADDR_i [29] $end
+$var wire 1 $! mst_HADDR_i [28] $end
+$var wire 1 #! mst_HADDR_i [27] $end
+$var wire 1 "! mst_HADDR_i [26] $end
+$var wire 1 !! mst_HADDR_i [25] $end
+$var wire 1 ~ mst_HADDR_i [24] $end
+$var wire 1 } mst_HADDR_i [23] $end
+$var wire 1 | mst_HADDR_i [22] $end
+$var wire 1 { mst_HADDR_i [21] $end
+$var wire 1 z mst_HADDR_i [20] $end
+$var wire 1 y mst_HADDR_i [19] $end
+$var wire 1 x mst_HADDR_i [18] $end
+$var wire 1 w mst_HADDR_i [17] $end
+$var wire 1 v mst_HADDR_i [16] $end
+$var wire 1 u mst_HADDR_i [15] $end
+$var wire 1 t mst_HADDR_i [14] $end
+$var wire 1 s mst_HADDR_i [13] $end
+$var wire 1 r mst_HADDR_i [12] $end
+$var wire 1 q mst_HADDR_i [11] $end
+$var wire 1 p mst_HADDR_i [10] $end
+$var wire 1 o mst_HADDR_i [9] $end
+$var wire 1 n mst_HADDR_i [8] $end
+$var wire 1 m mst_HADDR_i [7] $end
+$var wire 1 l mst_HADDR_i [6] $end
+$var wire 1 k mst_HADDR_i [5] $end
+$var wire 1 j mst_HADDR_i [4] $end
+$var wire 1 i mst_HADDR_i [3] $end
+$var wire 1 h mst_HADDR_i [2] $end
+$var wire 1 g mst_HADDR_i [1] $end
+$var wire 1 f mst_HADDR_i [0] $end
+$var wire 1 G! mst_HWDATA_i [31] $end
+$var wire 1 F! mst_HWDATA_i [30] $end
+$var wire 1 E! mst_HWDATA_i [29] $end
+$var wire 1 D! mst_HWDATA_i [28] $end
+$var wire 1 C! mst_HWDATA_i [27] $end
+$var wire 1 B! mst_HWDATA_i [26] $end
+$var wire 1 A! mst_HWDATA_i [25] $end
+$var wire 1 @! mst_HWDATA_i [24] $end
+$var wire 1 ?! mst_HWDATA_i [23] $end
+$var wire 1 >! mst_HWDATA_i [22] $end
+$var wire 1 =! mst_HWDATA_i [21] $end
+$var wire 1 <! mst_HWDATA_i [20] $end
+$var wire 1 ;! mst_HWDATA_i [19] $end
+$var wire 1 :! mst_HWDATA_i [18] $end
+$var wire 1 9! mst_HWDATA_i [17] $end
+$var wire 1 8! mst_HWDATA_i [16] $end
+$var wire 1 7! mst_HWDATA_i [15] $end
+$var wire 1 6! mst_HWDATA_i [14] $end
+$var wire 1 5! mst_HWDATA_i [13] $end
+$var wire 1 4! mst_HWDATA_i [12] $end
+$var wire 1 3! mst_HWDATA_i [11] $end
+$var wire 1 2! mst_HWDATA_i [10] $end
+$var wire 1 1! mst_HWDATA_i [9] $end
+$var wire 1 0! mst_HWDATA_i [8] $end
+$var wire 1 /! mst_HWDATA_i [7] $end
+$var wire 1 .! mst_HWDATA_i [6] $end
+$var wire 1 -! mst_HWDATA_i [5] $end
+$var wire 1 ,! mst_HWDATA_i [4] $end
+$var wire 1 +! mst_HWDATA_i [3] $end
+$var wire 1 *! mst_HWDATA_i [2] $end
+$var wire 1 )! mst_HWDATA_i [1] $end
+$var wire 1 (! mst_HWDATA_i [0] $end
+$var wire 1 H! mst_HMASTLOCK_i $end
+$var wire 1 O! mst_HPROT_i [6] $end
+$var wire 1 N! mst_HPROT_i [5] $end
+$var wire 1 M! mst_HPROT_i [4] $end
+$var wire 1 L! mst_HPROT_i [3] $end
+$var wire 1 K! mst_HPROT_i [2] $end
+$var wire 1 J! mst_HPROT_i [1] $end
+$var wire 1 I! mst_HPROT_i [0] $end
+$var wire 1 P! mst_HNONSEC_i $end
+$var wire 1 Q! mst_HEXCL_i $end
+$var wire 1 U! mst_HMASTER_i [3] $end
+$var wire 1 T! mst_HMASTER_i [2] $end
+$var wire 1 S! mst_HMASTER_i [1] $end
+$var wire 1 R! mst_HMASTER_i [0] $end
+$var wire 1 V! mst_HREADY_i $end
+$var reg 1 T% mst_HSEL_o [0:0] $end
+$var reg 1 U% mst_switch_o [0:0] $end
+$var wire 1 V% slv_HADDR_base_i [0] $end
+$var wire 1 W% slv_HADDR_base_i [1] $end
+$var wire 1 X% slv_HADDR_base_i [2] $end
+$var wire 1 Y% slv_HADDR_base_i [3] $end
+$var wire 1 Z% slv_HADDR_base_i [4] $end
+$var wire 1 [% slv_HADDR_base_i [5] $end
+$var wire 1 \% slv_HADDR_base_i [6] $end
+$var wire 1 ]% slv_HADDR_base_i [7] $end
+$var wire 1 ^% slv_HADDR_base_i [8] $end
+$var wire 1 _% slv_HADDR_base_i [9] $end
+$var wire 1 `% slv_HADDR_base_i [10] $end
+$var wire 1 a% slv_HADDR_base_i [11] $end
+$var wire 1 b% slv_HADDR_base_i [12] $end
+$var wire 1 c% slv_HADDR_base_i [13] $end
+$var wire 1 d% slv_HADDR_base_i [14] $end
+$var wire 1 e% slv_HADDR_base_i [15] $end
+$var wire 1 f% slv_HADDR_base_i [16] $end
+$var wire 1 g% slv_HADDR_base_i [17] $end
+$var wire 1 h% slv_HADDR_base_i [18] $end
+$var wire 1 i% slv_HADDR_base_i [19] $end
+$var wire 1 j% slv_HADDR_base_i [20] $end
+$var wire 1 k% slv_HADDR_base_i [21] $end
+$var wire 1 l% slv_HADDR_base_i [22] $end
+$var wire 1 m% slv_HADDR_base_i [23] $end
+$var wire 1 n% slv_HADDR_base_i [24] $end
+$var wire 1 o% slv_HADDR_base_i [25] $end
+$var wire 1 p% slv_HADDR_base_i [26] $end
+$var wire 1 q% slv_HADDR_base_i [27] $end
+$var wire 1 r% slv_HADDR_base_i [28] $end
+$var wire 1 s% slv_HADDR_base_i [29] $end
+$var wire 1 t% slv_HADDR_base_i [30] $end
+$var wire 1 u% slv_HADDR_base_i [31] $end
+$var wire 1 v% slv_HADDR_mask_i [0] $end
+$var wire 1 w% slv_HADDR_mask_i [1] $end
+$var wire 1 x% slv_HADDR_mask_i [2] $end
+$var wire 1 y% slv_HADDR_mask_i [3] $end
+$var wire 1 z% slv_HADDR_mask_i [4] $end
+$var wire 1 {% slv_HADDR_mask_i [5] $end
+$var wire 1 |% slv_HADDR_mask_i [6] $end
+$var wire 1 }% slv_HADDR_mask_i [7] $end
+$var wire 1 ~% slv_HADDR_mask_i [8] $end
+$var wire 1 !& slv_HADDR_mask_i [9] $end
+$var wire 1 "& slv_HADDR_mask_i [10] $end
+$var wire 1 #& slv_HADDR_mask_i [11] $end
+$var wire 1 $& slv_HADDR_mask_i [12] $end
+$var wire 1 %& slv_HADDR_mask_i [13] $end
+$var wire 1 && slv_HADDR_mask_i [14] $end
+$var wire 1 '& slv_HADDR_mask_i [15] $end
+$var wire 1 (& slv_HADDR_mask_i [16] $end
+$var wire 1 )& slv_HADDR_mask_i [17] $end
+$var wire 1 *& slv_HADDR_mask_i [18] $end
+$var wire 1 +& slv_HADDR_mask_i [19] $end
+$var wire 1 ,& slv_HADDR_mask_i [20] $end
+$var wire 1 -& slv_HADDR_mask_i [21] $end
+$var wire 1 .& slv_HADDR_mask_i [22] $end
+$var wire 1 /& slv_HADDR_mask_i [23] $end
+$var wire 1 0& slv_HADDR_mask_i [24] $end
+$var wire 1 1& slv_HADDR_mask_i [25] $end
+$var wire 1 2& slv_HADDR_mask_i [26] $end
+$var wire 1 3& slv_HADDR_mask_i [27] $end
+$var wire 1 4& slv_HADDR_mask_i [28] $end
+$var wire 1 5& slv_HADDR_mask_i [29] $end
+$var wire 1 6& slv_HADDR_mask_i [30] $end
+$var wire 1 7& slv_HADDR_mask_i [31] $end
+$var wire 1 8& mst_grant_i [0] $end
+$var reg 2 9& cr_state [1:0] $end
+$var reg 2 :& nx_state [1:0] $end
+$var reg 2 ;& mst_HTRANS_lat [1:0] $end
+$var reg 3 <& mst_HBURST_lat [2:0] $end
+$var reg 3 =& mst_HSIZE_lat [2:0] $end
+$var reg 1 >& mst_HWRITE_lat $end
+$var reg 32 ?& mst_HADDR_lat [31:0] $end
+$var reg 32 @& mst_HWDATA_lat [31:0] $end
+$var reg 1 A& mst_HMASTLOCK_lat $end
+$var reg 7 B& mst_HPROT_lat [6:0] $end
+$var reg 1 C& mst_HNONSEC_lat $end
+$var reg 1 D& mst_HEXCL_lat $end
+$var reg 4 E& mst_HMASTER_lat [3:0] $end
+$var reg 2 F& nx_HTRANS [1:0] $end
+$var reg 32 G& mst_addr_valid [31:0] $end
+$var reg 32 H& slv_addr_valid [31:0] $end
+$var reg 1 I& hsel [0:0] $end
+$var reg 1 J& mst_HSEL_lat [0:0] $end
+$var reg 1 K& slv_decode $end
+$var reg 1 L& slv_decode_lat [0:0] $end
+$var reg 1 M& cr_slave [0:0] $end
+$var reg 1 N& no_connect $end
+$var reg 1 O& burst_single $end
+$var reg 1 P& burst_incr_undefined_length $end
+$var reg 1 Q& burst_incr $end
+$var reg 1 R& burst_wrap $end
+$var reg 4 S& burst_cnt [3:0] $end
+$var reg 4 T& nx_burst_cnt [3:0] $end
+$var reg 4 U& burst_cnt_upd [3:0] $end
+$var reg 4 V& init_burst_cnt [3:0] $end
+$var reg 1 W& htrans_idle $end
+$var reg 1 X& htrans_nonseq $end
+
+$scope begin genblk4[0] $end
+$var parameter 32 Y& slv_sel $end
+$upscope $end
+
+$scope begin genblk3[0] $end
+$var parameter 32 Z& slv_sel $end
+$upscope $end
+
+$scope begin HSEL__GEN[0] $end
+$var parameter 32 [& slv_sel $end
+$upscope $end
+$upscope $end
+$upscope $end
+
+$scope begin genblk2[0] $end
+$var parameter 32 \& mst_sel $end
+
+$scope begin genblk1[0] $end
+$var parameter 32 ]& slv_sel $end
+$upscope $end
+$upscope $end
+
+$scope begin genblk1[0] $end
+$var parameter 32 ^& slv_sel $end
+
+$scope begin genblk1[0] $end
+$var parameter 32 _& mst_sel $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+03
+14
+bx 5
+bx 6
+b0 7
+b0 8
+b0 9
+b0 :
+b0 ;
+b0 <
+b0 =
+b0 >
+b0 ?
+b0 @
+b0 A
+b1 B
+bx C
+bx D
+bx E
+bx F
+bx G
+bx H
+bx I
+bx J
+bx K
+bx L
+bx M
+bx N
+b0 O
+b1 P
+b0 Q
+b0 R
+b0 S
+b0 T
+bx [
+bx \
+bx W!
+bx X!
+bx Y!
+bx Z!
+bx [!
+bx \!
+bx ]!
+bx ^!
+bx _!
+bx `!
+bx a!
+bx b!
+bx h"
+bx i"
+bx j"
+xk"
+bx l"
+bx m"
+xn"
+bx o"
+xp"
+xq"
+bx r"
+1s"
+bx t"
+bx u"
+bx v"
+xw"
+bx x"
+bx y"
+xz"
+bx {"
+x|"
+x}"
+bx ~"
+1!#
+b0 "#
+x##
+0$#
+0%#
+b0 &#
+x'#
+0(#
+0)#
+x*#
+b0 +#
+b0 ,#
+b0 -#
+b0 .#
+x/#
+x0#
+x1#
+x2#
+x3#
+bx #%
+bx $%
+bx %%
+bx &%
+bx '%
+bx (%
+bx )%
+bx *%
+bx +%
+bx ,%
+bx -%
+b1 .%
+bx R%
+xS%
+bx T%
+bx U%
+bx 9&
+bx :&
+bx ;&
+bx <&
+bx =&
+x>&
+bx ?&
+bx @&
+xA&
+bx B&
+xC&
+xD&
+bx E&
+bx F&
+b0 G&
+b0 H&
+b1 I&
+bx J&
+xK&
+bx L&
+bx M&
+xN&
+xO&
+xP&
+xQ&
+xR&
+bx S&
+bx T&
+bx U&
+bx V&
+1W&
+0X&
+b0 :#
+bx ;#
+b0 <#
+b0 =#
+bx 8$
+bx 9$
+bx :$
+x;$
+bx <$
+bx =$
+x>$
+bx ?$
+x@$
+xA$
+bx B$
+xC$
+bx D$
+b0 E$
+b0 F$
+xI$
+xJ$
+xK$
+xL$
+bx M$
+xN$
+xO$
+bx P$
+0Q$
+bx R$
+xS$
+bx T$
+bx U$
+xV$
+bx W$
+bx X$
+xY$
+bx Z$
+bx [$
+bx \$
+bx ]$
+bx ^$
+bx _$
+bx `$
+bx a$
+bx b$
+bx c$
+bx d$
+xr$
+bx u$
+xv$
+b1010 !
+b1 "
+b1 #
+b100000 $
+b100000 %
+b0 &
+b1 '
+b10 (
+b11 )
+b0 *
+b1 +
+b10 ,
+b11 -
+b0 .
+b1 /
+b10 0
+b1 1
+b0 2
+b1 U
+b1 V
+b100000 W
+b100000 X
+b0 ^&
+b0 _&
+b0 \&
+b0 ]&
+b0 x$
+b1 y$
+b100000 z$
+b100000 {$
+b0 |$
+b1 }$
+b10 ~$
+b11 !%
+b1 "%
+b0 [&
+b0 Z&
+b0 Y&
+b0 4#
+b1 5#
+b100000 6#
+b100000 7#
+b1 8#
+b1 9#
+b0 p$
+b1 q$
+b0 n$
+b0 o$
+b0 l$
+b0 m$
+b0 k$
+b0 i$
+b0 j$
+b0 h$
+b0 g$
+b0 f$
+b0 e$
+0H"
+0I"
+0J"
+0K"
+0L"
+0M"
+0N"
+0O"
+0P"
+0Q"
+0R"
+0S"
+0T"
+0U"
+0V"
+0W"
+0X"
+0Y"
+0Z"
+0["
+0\"
+0]"
+0^"
+0_"
+0`"
+0a"
+0b"
+0c"
+0d"
+0e"
+0f"
+0g"
+0("
+0)"
+0*"
+0+"
+0,"
+0-"
+0."
+0/"
+00"
+01"
+02"
+03"
+04"
+05"
+06"
+07"
+08"
+09"
+0:"
+0;"
+0<"
+0="
+0>"
+0?"
+0@"
+0A"
+0B"
+0C"
+0D"
+0E"
+0F"
+0G"
+0'"
+0&"
+1%"
+0c!
+0d!
+0e!
+0f!
+0g!
+0h!
+0i!
+0j!
+0k!
+0l!
+0m!
+0n!
+0o!
+0p!
+0q!
+0r!
+0s!
+0t!
+0u!
+0v!
+0w!
+0x!
+0y!
+0z!
+0{!
+0|!
+0}!
+0~!
+0!"
+0""
+0#"
+0$"
+1V!
+0R!
+0S!
+0T!
+0U!
+0Q!
+0P!
+0I!
+0J!
+0K!
+0L!
+0M!
+0N!
+0O!
+0H!
+0(!
+0)!
+0*!
+0+!
+0,!
+0-!
+0.!
+0/!
+00!
+01!
+02!
+03!
+04!
+05!
+06!
+07!
+08!
+09!
+0:!
+0;!
+0<!
+0=!
+0>!
+0?!
+0@!
+0A!
+0B!
+0C!
+0D!
+0E!
+0F!
+0G!
+0f
+0g
+0h
+0i
+0j
+0k
+0l
+0m
+0n
+0o
+0p
+0q
+0r
+0s
+0t
+0u
+0v
+0w
+0x
+0y
+0z
+0{
+0|
+0}
+0~
+0!!
+0"!
+0#!
+0$!
+0%!
+0&!
+0'!
+0e
+0b
+0c
+0d
+0_
+0`
+0a
+0]
+0^
+1Z
+0Y
+x8&
+0v%
+0w%
+0x%
+0y%
+0z%
+0{%
+0|%
+0}%
+0~%
+0!&
+0"&
+0#&
+0$&
+0%&
+0&&
+0'&
+0(&
+0)&
+0*&
+0+&
+0,&
+0-&
+0.&
+0/&
+00&
+01&
+02&
+03&
+04&
+05&
+06&
+07&
+0V%
+0W%
+0X%
+0Y%
+0Z%
+0[%
+0\%
+0]%
+0^%
+0_%
+0`%
+0a%
+0b%
+0c%
+0d%
+0e%
+0f%
+0g%
+0h%
+0i%
+0j%
+0k%
+0l%
+0m%
+0n%
+0o%
+0p%
+0q%
+0r%
+0s%
+0t%
+0u%
+0Q%
+0P%
+xO%
+0/%
+00%
+01%
+02%
+03%
+04%
+05%
+06%
+07%
+08%
+09%
+0:%
+0;%
+0<%
+0=%
+0>%
+0?%
+0@%
+0A%
+0B%
+0C%
+0D%
+0E%
+0F%
+0G%
+0H%
+0I%
+0J%
+0K%
+0L%
+0M%
+0N%
+xH$
+xG$
+17$
+x3$
+x4$
+x5$
+x6$
+x2$
+x1$
+x*$
+x+$
+x,$
+x-$
+x.$
+x/$
+x0$
+x)$
+xg#
+xh#
+xi#
+xj#
+xk#
+xl#
+xm#
+xn#
+xo#
+xp#
+xq#
+xr#
+xs#
+xt#
+xu#
+xv#
+xw#
+xx#
+xy#
+xz#
+x{#
+x|#
+x}#
+x~#
+x!$
+x"$
+x#$
+x$$
+x%$
+x&$
+x'$
+x($
+xG#
+xH#
+xI#
+xJ#
+xK#
+xL#
+xM#
+xN#
+xO#
+xP#
+xQ#
+xR#
+xS#
+xT#
+xU#
+xV#
+xW#
+xX#
+xY#
+xZ#
+x[#
+x\#
+x]#
+x^#
+x_#
+x`#
+xa#
+xb#
+xc#
+xd#
+xe#
+xf#
+xF#
+xC#
+xD#
+xE#
+x@#
+xA#
+xB#
+x>#
+x?#
+xt$
+xs$
+0w$
+$end
+#500
+13
+1Y
+b0 <&
+b0 =&
+0>&
+b0 ?&
+b0 @&
+0A&
+b0 B&
+0C&
+0D&
+b0 E&
+b0 -%
+b0 ,%
+b0 +%
+b0 *%
+b0 )%
+b0 (%
+b0 '%
+b0 &%
+b0 %%
+b0 $%
+b0 i"
+b0 j"
+0k"
+b0 l"
+b0 m"
+0n"
+b0 o"
+0p"
+0q"
+b0 r"
+b0 ~"
+0}"
+0|"
+b0 {"
+0z"
+b0 y"
+b0 x"
+0w"
+b0 v"
+b0 u"
+02$
+01$
+0)$
+0F#
+0@#
+0A#
+0B#
+0C#
+0D#
+0E#
+0G#
+0H#
+0I#
+0J#
+0K#
+0L#
+0M#
+0N#
+0O#
+0P#
+0Q#
+0R#
+0S#
+0T#
+0U#
+0V#
+0W#
+0X#
+0Y#
+0Z#
+0[#
+0\#
+0]#
+0^#
+0_#
+0`#
+0a#
+0b#
+0c#
+0d#
+0e#
+0f#
+0g#
+0h#
+0i#
+0j#
+0k#
+0l#
+0m#
+0n#
+0o#
+0p#
+0q#
+0r#
+0s#
+0t#
+0u#
+0v#
+0w#
+0x#
+0y#
+0z#
+0{#
+0|#
+0}#
+0~#
+0!$
+0"$
+0#$
+0$$
+0%$
+0&$
+0'$
+0($
+0*$
+0+$
+0,$
+0-$
+0.$
+0/$
+00$
+03$
+04$
+05$
+06$
+b0 d$
+b0 a$
+b0 _$
+b0 ^$
+b0 \$
+b0 [$
+b0 ]$
+b0 `$
+b0 b$
+b0 c$
+0A$
+0@$
+0>$
+0;$
+b0 9$
+b0 :$
+b0 <$
+b0 =$
+b0 ?$
+b0 B$
+b0 a!
+b0 ^!
+b0 \!
+b0 [!
+b0 Y!
+b0 X!
+b0 Z!
+b0 ]!
+b0 _!
+b0 `!
+b0 L
+b0 K
+b0 I
+b0 F
+b0 D
+b0 E
+b0 G
+b0 H
+b0 J
+b0 M
+#1000
+03
+0Y
+#1500
+13
+1Y
+#2000
+03
+0Y
+#2500
+13
+1Y
+#3000
+03
+0Y
+#3500
+13
+1Y
+#4000
+03
+0Y
+#4500
+13
+1Y
+#5000
+03
+0Y
+#5500
+13
+1Y
+#6000
+03
+0Y
+#6500
+13
+1Y
+#7000
+03
+0Y
+#7500
+13
+1Y
+#8000
+03
+0Y
+#8500
+13
+1Y
+#9000
+03
+0Y
+#9500
+13
+1Y
+#10000
+03
+0Y
+#10500
+13
+1Y
+#11000
+03
+0Y
+#11500
+13
+1Y
+#12000
+03
+0Y
+#12500
+13
+1Y
+#13000
+03
+0Y
+#13500
+13
+1Y
+#14000
+03
+0Y
+#14500
+13
+1Y
+#15000
+03
+0Y
+#15500
+13
+1Y
+#16000
+03
+0Y
+#16500
+13
+1Y
+#17000
+03
+0Y
+#17500
+13
+1Y
+#18000
+03
+0Y
+#18500
+13
+1Y
+#19000
+03
+0Y
+#19500
+13
+1Y

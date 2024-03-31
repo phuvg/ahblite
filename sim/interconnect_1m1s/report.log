@@ -1,0 +1,31 @@
+# vsim -c -l report.log -voptargs="+acc" -do "run -all" work.tb_ahblite_interconnect_1m1s 
+# Start time: 09:13:03 on Mar 29,2024
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# 
+# //  Questa Sim-64
+# //  Version 10.4c win64 Jul 20 2015
+# //
+# //  Copyright 1991-2015 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //  THIS DOCUMENT CONTAINS TRADE SECRETS AND COMMERCIAL OR FINANCIAL
+# //  INFORMATION THAT ARE PRIVILEGED, CONFIDENTIAL, AND EXEMPT FROM
+# //  DISCLOSURE UNDER THE FREEDOM OF INFORMATION ACT, 5 U.S.C. SECTION 552.
+# //  FURTHERMORE, THIS INFORMATION IS PROHIBITED FROM DISCLOSURE UNDER
+# //  THE TRADE SECRETS ACT, 18 U.S.C. SECTION 1905.
+# //
+# Loading sv_std.std
+# Loading work.tb_ahblite_interconnect_1m1s(fast)
+# Loading work.ahblite_interconnect(fast)
+# Loading work.ahblite_interconnect_masterport(fast)
+# Loading work.ahblite_interconnect_slaveport(fast)
+# Loading work.ahblite_interconnect_compare_nbit(fast)
+# Loading work.ahblite_interconnect_compare_1bit(fast)
+# run -all
+# ** Note: $finish    : ../../tb/tb_ahblite_interconnect_1m1s.sv(157)
+#    Time: 200 ns  Iteration: 0  Instance: /tb_ahblite_interconnect_1m1s
+# End time: 09:13:04 on Mar 29,2024, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
