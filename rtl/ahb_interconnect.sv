@@ -1,12 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////
-// Filename    : ahblite_interconnect.sv
+// Filename    : ahb_interconnect.sv
 // Description : 
 //
 // Author      : Phu Vuong
 // History     : Mar 28, 2024 : Initial     
 //
 ////////////////////////////////////////////////////////////////////////////////
-module ahblite_interconnect #(
+module ahb_interconnect #(
     parameter       MASTER                          = 1,
     parameter       SLAVE                           = 1,
     parameter       HADDR_WIDTH                     = 32,
@@ -164,7 +164,7 @@ module ahblite_interconnect #(
     //#--> masterport
     generate
         for(mst_sel=0; mst_sel<MASTER; mst_sel++) begin : masterport__GEN
-            ahblite_interconnect_masterport #(
+            ahb_interconnect_masterport #(
                 .SLAVE(SLAVE),
                 .HADDR_WIDTH(HADDR_WIDTH),
                 .HDATA_WIDTH(HDATA_WIDTH)
@@ -220,7 +220,7 @@ module ahblite_interconnect #(
     //#--> slaveport
     generate
         for(slv_sel=0; slv_sel<SLAVE; slv_sel++) begin : slaveport__GEN
-            ahblite_interconnect_slaveport #(
+            ahb_interconnect_slaveport #(
                 .MASTER(MASTER),
                 .HADDR_WIDTH(HADDR_WIDTH),
                 .HDATA_WIDTH(HDATA_WIDTH)

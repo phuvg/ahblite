@@ -1,12 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////
-// Filename    : ahblite_interconnect_masterport.sv
+// Filename    : ahb_interconnect_masterport.sv
 // Description : 
 //
 // Author      : Phu Vuong
 // History     : Mar 26, 2024 : Initial     
 //
 ////////////////////////////////////////////////////////////////////////////////
-module ahblite_interconnect_masterport #(
+module ahb_interconnect_masterport #(
     parameter       SLAVE                           = 1,
     parameter       HADDR_WIDTH                     = 32,
     parameter       HDATA_WIDTH                     = 32
@@ -82,9 +82,13 @@ module ahblite_interconnect_masterport #(
     //#--> genvar
     genvar                                          slv_sel; //slave select for loop
 
-    //#--> FSM
-    logic   [1:0]                                   cr_state;
-    logic   [1:0]                                   nx_state;
+    ////#--> FSM
+    //logic   [1:0]                                   cr_state;
+    //logic   [1:0]                                   nx_state;
+
+    //#--> htrans detect
+    logic                                           htrans_idle;
+    logic                                           htrans_nonseq;
 
     //#--> latch master's command
     logic   [1:0]                                   mst_HTRANS_lat;
@@ -99,7 +103,8 @@ module ahblite_interconnect_masterport #(
     logic                                           mst_HEXCL_lat;
     logic   [3:0]                                   mst_HMASTER_lat;
 
-    logic   [1:0]                                   nx_HTRANS;
+    //logic   [1:0]                                   nx_HTRANS;
+    //logic   [HADDR_WIDTH-1:0]                       nx_HADDR;
 
     //#--> address decode: generate HSEL
     logic   [SLAVE-1:0][HADDR_WIDTH-1:0]            mst_addr_valid;
@@ -113,32 +118,36 @@ module ahblite_interconnect_masterport #(
     logic   [SLAVE_WIDTH-1:0]                       cr_slave;
     logic                                           no_connect;
 
-    //#--> burst decoder
-    logic                                           burst_single;
-    logic                                           burst_incr_undefined_length;
-    logic                                           burst_incr;
-    logic                                           burst_wrap;
+    ////#--> burst decoder
+    //logic                                           burst_single;
+    //logic                                           burst_incr_undefined_length;
+    //logic                                           burst_incr;
+    //logic                                           burst_wrap;
 
-    //#--> burst counter
-    logic   [3:0]                                   burst_cnt;
-    logic   [3:0]                                   nx_burst_cnt;
-    logic   [3:0]                                   burst_cnt_upd;
-    logic   [3:0]                                   init_burst_cnt;
+    ////#--> burst counter
+    //logic   [3:0]                                   burst_cnt;
+    //logic   [3:0]                                   nx_burst_cnt;
+    //logic   [3:0]                                   burst_cnt_upd;
+    //logic   [3:0]                                   init_burst_cnt;
 
-    //#--> htrans detect
-    logic                                           htrans_idle;
-    logic                                           htrans_nonseq;
+    ////#--> from slave to master
+    //logic                                           wr_en;
+
 
     ////////////////////////////////////////////////////////////////////////////
     //design description
     ////////////////////////////////////////////////////////////////////////////
+    //#--> htrans detect
+    assign htrans_idle = mst_HTRANS_i == IDLE;
+    assign htrans_nonseq = mst_HTRANS_i == NONSEQ ? 1'b1 : 1'b0;
+
     //#--> latch master's command
-    assign nx_HTRANS =  slv_HREADY_i[cr_slave] ? mst_HTRANS_i : mst_HTRANS_lat;
+    //assign nx_HTRANS =  htrans_nonseq ? mst_HTRANS_i : mst_HTRANS_lat;
     always_ff @(posedge HCLK or negedge HRESETn) begin
         if(~HRESETn) begin
             mst_HTRANS_lat <= 2'h0;
         end else begin
-            mst_HTRANS_lat <= nx_HTRANS;
+            mst_HTRANS_lat <= (htrans_nonseq ? mst_HTRANS_i : mst_HTRANS_lat);
         end
     end 
 
@@ -146,7 +155,7 @@ module ahblite_interconnect_masterport #(
         if(~HRESETn) begin
             mst_HBURST_lat <= 3'h0;
         end else begin
-            mst_HBURST_lat <= mst_HBURST_i;
+            mst_HBURST_lat <= (htrans_nonseq ? mst_HBURST_i : mst_HBURST_lat);
         end
     end 
 
@@ -154,7 +163,7 @@ module ahblite_interconnect_masterport #(
         if(~HRESETn) begin
             mst_HSIZE_lat <= 3'h0;
         end else begin
-            mst_HSIZE_lat <= mst_HSIZE_i;
+            mst_HSIZE_lat <= (htrans_nonseq ? mst_HSIZE_i : mst_HSIZE_lat);
         end
     end 
 
@@ -162,15 +171,16 @@ module ahblite_interconnect_masterport #(
         if(~HRESETn) begin
             mst_HWRITE_lat <= 1'h0;
         end else begin
-            mst_HWRITE_lat <= mst_HWRITE_i;
+            mst_HWRITE_lat <= (htrans_nonseq ? mst_HWRITE_i : mst_HWRITE_lat);
         end
     end 
     
+    //assign nx_HADDR = htrans_nonseq ? mst_HADDR_i : mst_HADDR_lat;
     always_ff @(posedge HCLK or negedge HRESETn) begin
         if(~HRESETn) begin
             mst_HADDR_lat <= {(HADDR_WIDTH){1'b0}};
         end else begin
-            mst_HADDR_lat <= mst_HADDR_i;
+            mst_HADDR_lat <= (htrans_nonseq ? mst_HADDR_i : mst_HADDR_lat);
         end
     end 
 
@@ -178,7 +188,7 @@ module ahblite_interconnect_masterport #(
         if(~HRESETn) begin
             mst_HWDATA_lat <= {(HDATA_WIDTH){1'b0}};
         end else begin
-            mst_HWDATA_lat <= mst_HWDATA_i;
+            mst_HWDATA_lat <= (htrans_nonseq ? mst_HWDATA_i : mst_HWDATA_lat);
         end
     end 
 
@@ -186,7 +196,7 @@ module ahblite_interconnect_masterport #(
         if(~HRESETn) begin
             mst_HMASTLOCK_lat <= 1'h0;
         end else begin
-            mst_HMASTLOCK_lat <= mst_HMASTLOCK_i;
+            mst_HMASTLOCK_lat <= (htrans_nonseq ? mst_HMASTLOCK_i : mst_HMASTLOCK_lat);
         end
     end 
 
@@ -194,7 +204,7 @@ module ahblite_interconnect_masterport #(
         if(~HRESETn) begin
             mst_HPROT_lat <= 7'h0;
         end else begin
-            mst_HPROT_lat <= mst_HPROT_i;
+            mst_HPROT_lat <= (htrans_nonseq ? mst_HPROT_i : mst_HPROT_lat);
         end
     end 
 
@@ -202,7 +212,7 @@ module ahblite_interconnect_masterport #(
         if(~HRESETn) begin
             mst_HNONSEC_lat <= 1'h0;
         end else begin
-            mst_HNONSEC_lat <= mst_HNONSEC_i;
+            mst_HNONSEC_lat <= (htrans_nonseq ? mst_HNONSEC_i : mst_HNONSEC_lat);
         end
     end 
 
@@ -210,7 +220,7 @@ module ahblite_interconnect_masterport #(
         if(~HRESETn) begin
             mst_HEXCL_lat <= 1'h0;
         end else begin
-            mst_HEXCL_lat <= mst_HEXCL_i;
+            mst_HEXCL_lat <= (htrans_nonseq ? mst_HEXCL_i : mst_HEXCL_lat);
         end
     end 
 
@@ -218,13 +228,9 @@ module ahblite_interconnect_masterport #(
         if(~HRESETn) begin
             mst_HMASTER_lat <= 4'h0;
         end else begin
-            mst_HMASTER_lat <= mst_HMASTER_i;
+            mst_HMASTER_lat <= (htrans_nonseq ? mst_HMASTER_i : mst_HMASTER_lat);
         end
     end 
-
-    //#--> htrans detect
-    assign htrans_idle = mst_HTRANS_i == IDLE;
-    assign htrans_nonseq = mst_HTRANS_i == NONSEQ;
 
     //#--> address decode: generate HSEL
     generate
@@ -247,12 +253,12 @@ module ahblite_interconnect_masterport #(
 
     //#--> slave selection
     generate
-        assign slv_decode[0] = mst_HSEL_o[0] ? 'h0 : slv_decode_lat;
+        assign slv_decode[0] = mst_grant_i[0] ? 'h0 : slv_decode_lat;
         for(slv_sel=1; slv_sel<SLAVE; slv_sel++) begin
-            assign slv_decode[slv_sel] = mst_HSEL_o[slv_sel] ? slv_sel : slv_decode[slv_sel-1];
+            assign slv_decode[slv_sel] = mst_grant_i[slv_sel] ? slv_sel : slv_decode[slv_sel-1];
         end
     endgenerate
-    assign cr_slave = ~(|mst_HSEL_o) ? slv_decode_lat : slv_decode[SLAVE-1];
+    assign cr_slave = slv_decode[SLAVE-1];
     
     always_ff @(posedge HCLK or HRESETn) begin
         if(~HRESETn) begin
@@ -318,6 +324,14 @@ module ahblite_interconnect_masterport #(
         end
     endgenerate
 
-    //#--> from slave to master
+    ////#--> from slave to master
+    //always_ff @(posedge HCLK or negedge HRESETn) begin
+    //    if(~HRESETn) begin
+    //        wr_en <= 1'b0;
+    //    end else begin
+    //        wr_en <= mst_HWRITE_i;
+    //    end
+    //end
+    //assign mst_HRDATA_o = (~wr_en) & slv_HRDATA_i[cr_slave];
     assign mst_HRDATA_o = slv_HRDATA_i[cr_slave];
 endmodule

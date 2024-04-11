@@ -1,19 +1,22 @@
 ////////////////////////////////////////////////////////////////////////////////
-// Filename    : ahblite_interconnect_compare.sv
+// Filename    : ahb_interconnect_compare.sv
 // Description : 
 //
 // Author      : Phu Vuong
 // History     : Mar 26, 2024 : Initial     
 //
 ////////////////////////////////////////////////////////////////////////////////
-module ahblite_interconnect_compare_1bit (
-    output logic    comp_o,
-    input           flag_le, //flag larger or equal
+module ahb_interconnect_compare_1bit (
+    output logic    ol,
+    output logic    oe,
+    input           fl, //flag larger
+    input           fe, //flag equal
     input           a,
     input           b
 );
     ////////////////////////////////////////////////////////////////////////////
     //design description
     ////////////////////////////////////////////////////////////////////////////
-    assign comp_o = flag_le | a | ~b;
+    assign ol = fl | a | ~b;
+    assign oe = a ~^ b;
 endmodule

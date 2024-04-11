@@ -1,12 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////
-// Filename    : ahblite_interconnect_slaveport.sv
+// Filename    : ahb_interconnect_slaveport.sv
 // Description : 
 //
 // Author      : Phu Vuong
 // History     : Mar 26, 2024 : Initial     
 //
 ////////////////////////////////////////////////////////////////////////////////
-module ahblite_interconnect_slaveport #(
+module ahb_interconnect_slaveport #(
     parameter       MASTER                          = 1,
     parameter       HADDR_WIDTH                     = 32,
     parameter       HDATA_WIDTH                     = 32
@@ -38,8 +38,8 @@ module ahblite_interconnect_slaveport #(
     output logic    [2:0]                           slv_HBURST_o,
     output logic    [2:0]                           slv_HSIZE_o,
     output logic                                    slv_HWRITE_o,
-    output logic    [HDATA_WIDTH-1:0]               slv_HADDR_o,
-    output logic    [HDATA_WIDTH-1:0]               slv_HWDATA_o,
+    output logic    [HADDR_WIDTH-1:0]               slv_HADDR_o,
+    output logic    [HADDR_WIDTH-1:0]               slv_HWDATA_o,
     output logic                                    slv_HMASTLOCK_o,
     output logic    [6:0]                           slv_HPROT_o,
     output logic                                    slv_HNONSEC_o,
@@ -65,6 +65,7 @@ module ahblite_interconnect_slaveport #(
     ////////////////////////////////////////////////////////////////////////////
     localparam      PRIORITY_WIDTH                  = MASTER==1 ? 1 : $clog2(MASTER);
     localparam      PRIORITY_LEVEL                  = MASTER;
+    localparam      LOWEST_LEVEL                    = MASTER-1;
 	
     
     ////////////////////////////////////////////////////////////////////////////
@@ -81,7 +82,8 @@ module ahblite_interconnect_slaveport #(
     logic           [MASTER-1:0][PRIORITY_WIDTH-1:0]nx_priority;
 
     logic           [MASTER-1:0][PRIORITY_WIDTH-1:0]cr_priority;
-    logic           [MASTER-1:0]                    flag_larger_equal;
+    logic           [MASTER-1:0]                    flag_larger;
+    logic           [MASTER-1:0]                    flag_equal;
 
     //#--> arbiter - priority selection
     logic           [MASTER-1:0][PRIORITY_LEVEL-1:0]req_level;
@@ -122,6 +124,9 @@ module ahblite_interconnect_slaveport #(
     logic           [MASTER-1:0]                    mst_HEXCL_mx;
     logic           [MASTER-1:0][3:0]               mst_HMASTER_mx;
 
+    logic           [MASTER-1:0]                    mst_en;
+    logic           [MASTER-1:0]                    mx_out_sel;
+
     ////////////////////////////////////////////////////////////////////////////
     //design description
     ////////////////////////////////////////////////////////////////////////////
@@ -137,16 +142,18 @@ module ahblite_interconnect_slaveport #(
 
     generate
         for(mst_sel=0; mst_sel<MASTER; mst_sel++) begin : nx_priority__GEN
-            ahblite_interconnect_compare_nbit #(
+            ahb_interconnect_compare_nbit #(
                 .WIDTH(MASTER)
             ) comp_00 (
-                .comp_o(flag_larger_equal[mst_sel]),
-                .a(priority_lat[0]),
+                .ol(flag_larger[mst_sel]),
+                .oe(flag_equal[mst_sel]),
+                .a(priority_lat[mst_sel]),
                 .b(cr_priority[MASTER-1])
             );
-            assign nx_priority[mst_sel] =   nx_grant[mst_sel] ? {(PRIORITY_WIDTH){1'b1}} :
-                                            flag_larger_equal[mst_sel] ? priority_lat[0] :
-                                            priority_lat[0] - {{(PRIORITY_WIDTH-1){1'b0}}, 1'b1};
+            assign nx_priority[mst_sel] =   upd_priority ? (nx_grant[mst_sel] ? LOWEST_LEVEL :
+                                                flag_larger[mst_sel] | flag_equal[mst_sel] ? priority_lat[mst_sel] - {{(PRIORITY_WIDTH-1){1'b0}}, 1'b1} :
+                                                priority_lat[mst_sel]
+                                            ) : priority_lat[mst_sel];
             
             always_ff @(posedge HCLK or negedge HRESETn) begin
                 if(~HRESETn) begin
@@ -162,7 +169,7 @@ module ahblite_interconnect_slaveport #(
     generate
         for(mst_sel=0; mst_sel<MASTER; mst_sel++) begin : req_level__GEN
             for(level_sel=0; level_sel<PRIORITY_LEVEL; level_sel++) begin : req_level_bit__GEN
-                assign req_level[mst_sel][level_sel] = priority_lat[mst_sel] == mst_sel ? mst_HSEL_i[mst_sel] : 1'b0;
+                assign req_level[mst_sel][level_sel] = mst_HSEL_i[mst_sel] ? priority_lat[mst_sel] == level_sel : 1'b0;
             end
         end
     endgenerate
@@ -282,29 +289,33 @@ module ahblite_interconnect_slaveport #(
 
     //#--> from master to slave
     generate
-        assign mst_HTRANS_mx[0] = (nx_grant[0] | mst_grant_o[0]) ? mst_HTRANS_i[0] : 'h0;
-        assign mst_HBURST_mx[0] = (nx_grant[0] | mst_grant_o[0]) ? mst_HBURST_i[0] : 'h0;
-        assign mst_HSIZE_mx[0] = (nx_grant[0] | mst_grant_o[0]) ? mst_HSIZE_i[0] : 'h0;
-        assign mst_HWRITE_mx[0] = (nx_grant[0] | mst_grant_o[0]) ? mst_HWRITE_i[0] : 'h0;
-        assign mst_HADDR_mx[0] = (nx_grant[0] | mst_grant_o[0]) ? mst_HADDR_i[0] : 'h0;
-        assign mst_HWDATA_mx[0] = (nx_grant[0] | mst_grant_o[0]) ? mst_HWDATA_i[0] : 'h0;
-        assign mst_HMASTLOCK_mx[0] = (nx_grant[0] | mst_grant_o[0]) ? mst_HMASTLOCK_i[0] : 'h0;
-        assign mst_HPROT_mx[0] = (nx_grant[0] | mst_grant_o[0]) ? mst_HPROT_i[0] : 'h0;
-        assign mst_HNONSEC_mx[0] = (nx_grant[0] | mst_grant_o[0]) ? mst_HNONSEC_i[0] : 'h0;
-        assign mst_HEXCL_mx[0] = (nx_grant[0] | mst_grant_o[0]) ? mst_HEXCL_i[0] : 'h0;
-        assign mst_HMASTER_mx[0] = (nx_grant[0] | mst_grant_o[0]) ? mst_HMASTER_i[0] : 'h0;
+        assign mst_en[0] = (cr_priority[0] == 0);
+        assign mx_out_sel[0] = nx_grant[0] | (no_grant & mst_HSEL_i[0] & mst_en[0]);
+        assign mst_HTRANS_mx[0]     = mx_out_sel[0] ? mst_HTRANS_i[0] : 'h0;
+        assign mst_HBURST_mx[0]     = mx_out_sel[0] ? mst_HBURST_i[0] : 'h0;
+        assign mst_HSIZE_mx[0]      = mx_out_sel[0] ? mst_HSIZE_i[0] : 'h0;
+        assign mst_HWRITE_mx[0]     = mx_out_sel[0] ? mst_HWRITE_i[0] : 'h0;
+        assign mst_HADDR_mx[0]      = mx_out_sel[0] ? mst_HADDR_i[0] : 'h0;
+        assign mst_HWDATA_mx[0]     = mx_out_sel[0] ? mst_HWDATA_i[0] : 'h0;
+        assign mst_HMASTLOCK_mx[0]  = mx_out_sel[0] ? mst_HMASTLOCK_i[0] : 'h0;
+        assign mst_HPROT_mx[0]      = mx_out_sel[0] ? mst_HPROT_i[0] : 'h0;
+        assign mst_HNONSEC_mx[0]    = mx_out_sel[0] ? mst_HNONSEC_i[0] : 'h0;
+        assign mst_HEXCL_mx[0]      = mx_out_sel[0] ? mst_HEXCL_i[0] : 'h0;
+        assign mst_HMASTER_mx[0]    = mx_out_sel[0] ? mst_HMASTER_i[0] : 'h0;
         for(mst_sel=1; mst_sel<MASTER; mst_sel++) begin : mst2slv__GEN
-            assign mst_HTRANS_mx[mst_sel] = (nx_grant[mst_sel] | mst_grant_o[mst_sel]) ? mst_HTRANS_i[mst_sel] : mst_HTRANS_mx[mst_sel-1];
-            assign mst_HBURST_mx[mst_sel] = (nx_grant[mst_sel] | mst_grant_o[mst_sel]) ? mst_HBURST_i[mst_sel] : mst_HBURST_mx[mst_sel-1];
-            assign mst_HSIZE_mx[mst_sel] = (nx_grant[mst_sel] | mst_grant_o[mst_sel]) ? mst_HSIZE_i[mst_sel] : mst_HSIZE_mx[mst_sel-1];
-            assign mst_HWRITE_mx[mst_sel] = (nx_grant[mst_sel] | mst_grant_o[mst_sel]) ? mst_HWRITE_i[mst_sel] : mst_HWRITE_mx[mst_sel-1];
-            assign mst_HADDR_mx[mst_sel] = (nx_grant[mst_sel] | mst_grant_o[mst_sel]) ? mst_HADDR_i[mst_sel] : mst_HADDR_mx[mst_sel-1];
-            assign mst_HWDATA_mx[mst_sel] = (nx_grant[mst_sel] | mst_grant_o[mst_sel]) ? mst_HWDATA_i[mst_sel] : mst_HWDATA_mx[mst_sel-1];
-            assign mst_HMASTLOCK_mx[mst_sel] = (nx_grant[mst_sel] | mst_grant_o[mst_sel]) ? mst_HMASTLOCK_i[mst_sel] : mst_HMASTLOCK_mx[mst_sel-1];
-            assign mst_HPROT_mx[mst_sel] = (nx_grant[mst_sel] | mst_grant_o[mst_sel]) ? mst_HPROT_i[mst_sel] : mst_HPROT_mx[mst_sel-1];
-            assign mst_HNONSEC_mx[mst_sel] = (nx_grant[mst_sel] | mst_grant_o[mst_sel]) ? mst_HNONSEC_i[mst_sel] : mst_HNONSEC_mx[mst_sel-1];
-            assign mst_HEXCL_mx[mst_sel] = (nx_grant[mst_sel] | mst_grant_o[mst_sel]) ? mst_HEXCL_i[mst_sel] : mst_HEXCL_mx[mst_sel-1];
-            assign mst_HMASTER_mx[mst_sel] = (nx_grant[mst_sel] | mst_grant_o[mst_sel]) ? mst_HMASTER_i[mst_sel] : mst_HMASTER_mx[mst_sel-1];
+            assign mst_en[mst_sel] = (cr_priority[mst_sel] == mst_sel);
+            assign mx_out_sel[mst_sel] = nx_grant[mst_sel] | (no_grant & mst_HSEL_i[mst_sel] & mst_en[mst_sel]);
+            assign mst_HTRANS_mx[mst_sel]    = mx_out_sel[mst_sel] ? mst_HTRANS_i[mst_sel] : mst_HTRANS_mx[mst_sel-1];
+            assign mst_HBURST_mx[mst_sel]    = mx_out_sel[mst_sel] ? mst_HBURST_i[mst_sel] : mst_HBURST_mx[mst_sel-1];
+            assign mst_HSIZE_mx[mst_sel]     = mx_out_sel[mst_sel] ? mst_HSIZE_i[mst_sel] : mst_HSIZE_mx[mst_sel-1];
+            assign mst_HWRITE_mx[mst_sel]    = mx_out_sel[mst_sel] ? mst_HWRITE_i[mst_sel] : mst_HWRITE_mx[mst_sel-1];
+            assign mst_HADDR_mx[mst_sel]     = mx_out_sel[mst_sel] ? mst_HADDR_i[mst_sel] : mst_HADDR_mx[mst_sel-1];
+            assign mst_HWDATA_mx[mst_sel]    = mx_out_sel[mst_sel] ? mst_HWDATA_i[mst_sel] : mst_HWDATA_mx[mst_sel-1];
+            assign mst_HMASTLOCK_mx[mst_sel] = mx_out_sel[mst_sel] ? mst_HMASTLOCK_i[mst_sel] : mst_HMASTLOCK_mx[mst_sel-1];
+            assign mst_HPROT_mx[mst_sel]     = mx_out_sel[mst_sel] ? mst_HPROT_i[mst_sel] : mst_HPROT_mx[mst_sel-1];
+            assign mst_HNONSEC_mx[mst_sel]   = mx_out_sel[mst_sel] ? mst_HNONSEC_i[mst_sel] : mst_HNONSEC_mx[mst_sel-1];
+            assign mst_HEXCL_mx[mst_sel]     = mx_out_sel[mst_sel] ? mst_HEXCL_i[mst_sel] : mst_HEXCL_mx[mst_sel-1];
+            assign mst_HMASTER_mx[mst_sel]   = mx_out_sel[mst_sel] ? mst_HMASTER_i[mst_sel] : mst_HMASTER_mx[mst_sel-1];
         end
     endgenerate
 

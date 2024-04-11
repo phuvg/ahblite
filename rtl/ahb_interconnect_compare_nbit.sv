@@ -1,15 +1,16 @@
 ////////////////////////////////////////////////////////////////////////////////
-// Filename    : ahblite_interconnect_compare_nbit.sv
+// Filename    : ahb_interconnect_compare_nbit.sv
 // Description : 
 //
 // Author      : Phu Vuong
 // History     : Mar 26, 2024 : Initial     
 //
 ////////////////////////////////////////////////////////////////////////////////
-module ahblite_interconnect_compare_nbit #(
+module ahb_interconnect_compare_nbit #(
     parameter WIDTH = 2
 )(
-    output logic                comp_o,
+    output logic                ol,
+    output logic                oe,
     input           [WIDTH-1:0] a,
     input           [WIDTH-1:0] b
 );
@@ -17,32 +18,40 @@ module ahblite_interconnect_compare_nbit #(
     //logic - wire - reg declaration
     ////////////////////////////////////////////////////////////////////////////
     genvar                      i;
-    logic           [WIDTH-1:0] comp;
+    logic           [WIDTH-1:0] cl;
+    logic           [WIDTH-1:0] ce;
 
     ////////////////////////////////////////////////////////////////////////////
     //design description
     ////////////////////////////////////////////////////////////////////////////
     generate
         if(WIDTH > 1) begin : compare_nbit
-            ahblite_interconnect_compare_1bit compare_msb(
-                .comp_o(comp[WIDTH-1]),
-                .flag_le(1'b0),
+            ahb_interconnect_compare_1bit compare_msb(
+                .ol(cl[WIDTH-1]),
+                .oe(ce[WIDTH-1]),
+                .fl(1'b0),
+                .fe(1'b0),
                 .a(a[WIDTH-1]),
                 .b(a[WIDTH-1])
             );
             for(i=WIDTH-2; i>=0; i--) begin : compare_lsb__GEN
-                ahblite_interconnect_compare_1bit compare(
-                    .comp_o(comp[i]),
-                    .flag_le(comp[i+1]),
+                ahb_interconnect_compare_1bit compare(
+                    .ol(cl[i]),
+                    .oe(ce[i]),
+                    .fl(cl[i+1]),
+                    .fe(ce[i+1]),
                     .a(a[i]),
                     .b(a[i])
                 );
             end
-            assign comp_o = comp[0];
+            assign ol = cl[0];
+            assign oe = ce[0];
         end else begin : compare_1bit
-            ahblite_interconnect_compare_1bit compare_00(
-                .comp_o(comp_o),
-                .flag_le(1'b0),
+            ahb_interconnect_compare_1bit compare_00(
+                .ol(ol),
+                .oe(oe),
+                .fl(1'b0),
+                .fe(1'b0),
                 .a(a[0]),
                 .b(a[0])
             );
